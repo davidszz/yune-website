@@ -1,14 +1,60 @@
 import Link from "next/link";
-import { NavbarWrapper, NavbarContent, Menu, Logo } from "./styles";
+import { MdLogin } from 'react-icons/md';
+import { useState } from "react";
+
+import { Button } from "@components/Button";
+import { NavbarWrapper, NavbarContent, Nav, Menu, Logo, MenuLink, Access, MobileMenuIcon } from "./styles";
 
 export function Navbar() {
+  const [open, setOpen] = useState(false);
+  
+  function handleMobileBtnClick() {
+    setOpen(state => !state);
+  }
+
   return (
     <NavbarWrapper>
       <NavbarContent>
-        <Link href="/" passHref>
-          <Logo src="/logo.svg" width="56px" height="56px" />
+        <Link href="/">
+          <a>
+            <Logo src="/logo.svg" width="56px" height="56px" />
+          </a>
         </Link>
-        <Menu></Menu>
+        <Nav open={open}>
+          <Menu>
+            <MenuLink>
+              <a>Home</a>
+            </MenuLink>
+            <MenuLink>
+              <a>Planos</a>
+            </MenuLink>
+            <MenuLink>
+              <a>Equipe</a>
+            </MenuLink>
+            <MenuLink>
+              <a>Serviços</a>
+            </MenuLink>
+          </Menu>
+        </Nav>
+        <Access>
+          <Button uppercase transparent icon={MdLogin}>
+            Login
+          </Button>
+        </Access>
+
+        <MobileMenuIcon onClick={handleMobileBtnClick}>
+          {open ? (
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="16.9399" y="15.5309" width="22" height="2" fill="var(--primary)" transform="rotate(45 16.9399 15.5309)" />
+              <rect x="15.5257" y="31.0872" width="22" height="2" fill="var(--primary)" transform="rotate(-45 15.5257 31.0872)" />
+            </svg>
+          ) : (
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="12" y="20" width="24" height="2" fill="var(--primary)" />
+              <rect x="20" y="26" width="16" height="2" fill="var(--primary)" />
+            </svg>
+          )}
+        </MobileMenuIcon>
       </NavbarContent>
     </NavbarWrapper>
   )
