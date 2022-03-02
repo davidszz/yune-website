@@ -2,20 +2,22 @@ import styled from "styled-components";
 
 export const Main = styled.main`
   margin: 0 auto;
-  padding-top: 128px;
-  padding-bottom: 64px;
-
-  @media (max-width: 768px) {
-    padding-top: 64px;
-  }
 `;
 
-export const MainSection = styled.section`
+export const Section = styled.section`
   width: 100%;
 
   display: flex;
   justify-content: center;
   align-items: center;
+
+  padding: 160px 0px;
+
+  border-bottom: 1px solid var(--borders);
+
+  @media (max-width: 768px) {
+    padding: 80px 0;
+  }
 `;
 
 export const MainText = styled.div`
@@ -27,44 +29,116 @@ export const MainText = styled.div`
   align-items: center;
 
   & > h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
 
     color: var(--white);
 
     text-align: center;
-    line-height: 3.2rem;
+    line-height: 3.75rem;
     
-    max-width: 500px;
+    max-width: 680px;
+
+    margin-bottom: 16px;
   }
 
-  & > h4 {
-    margin-top: 12px;
-    
-    font-size: 1.2rem;
+  & > h2 {
+    font-size: 1rem;
     font-weight: 400;
+
+    color: var(--gray);
 
     text-align: center;
     
-    max-width: 768px;
-  }
+    max-width: 472px;
 
-  & > button {
-    margin-top: 24px;
+    margin-bottom: 40px;
   }
 
   @media (max-width: 768px) {
-    align-items: flex-start;
-
     & > h1 {
       font-size: 2.4rem;
-
-      text-align: left;
       line-height: 2.5rem;
     }
 
-    & > h4 {
+    & > h2 {
       font-size: 1rem;
-      text-align: left;
     }
   }
+`;
+
+export const ServicesWrapper = styled.div`
+  width: 1200px;
+  margin: 0 24px;
+`;
+
+export const ServicesTitle = styled.h3`
+  font-size: 3rem;
+
+  color: var(--base-text);
+
+  text-align: center;
+  line-height: 3.2rem;
+  
+  max-width: 680px;
+
+  margin: 0 auto;
+  margin-bottom: 16px;
+
+  @media (max-width: 768px) {
+    font-size: 1.9rem;
+    line-height: 2.2rem;
+  }
+`;
+
+export const Services = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 32px;
+  gap: 32px;
+
+  width: 100%;
+
+  margin-top: 80px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+export const Service = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  grid-area: span 1;
+
+  padding: 24px;
+
+  border: 1px solid var(--borders);
+  border-radius: 4px;
+
+  background-color: rgba(255,255,255,.01);
+
+  color: var(--gray);
+`;
+
+export const ServiceTitle = styled.h4`
+  font-size: 1.6rem;
+  font-weight: 600;
+
+  margin-top: 16px;
+`;
+
+export const ServiceDescription = styled.div`
+  font-size: 1rem;
+  font-weight: 400;
+
+  line-height: 1.8rem;
+
+  color: var(--text);
+
+  margin-top: 16px;
 `;

@@ -78,7 +78,7 @@ export const Nav = styled.nav<{ open?: boolean }>`
 
         line-height: 64px;
 
-        margin: 4px 0;
+        margin: 4px 0!important;
         
         & > a {
           display: block;
@@ -90,6 +90,11 @@ export const Nav = styled.nav<{ open?: boolean }>`
         }
       }
     }
+  }
+
+  @media (max-width: 768px) {
+    top: 78px;
+    height: calc(100% - 78px);
   }
 `;
 
@@ -105,8 +110,11 @@ export const Menu = styled.ul`
 export const MenuLink = styled.li`
   font-size: 1rem;
 
-  margin-left: 32px;
   margin-top: 0;
+
+  &:not(:first-child) {
+    margin-left: 32px;
+  }
 
   & > a {
     padding: 32px 0;

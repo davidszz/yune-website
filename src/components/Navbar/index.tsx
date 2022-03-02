@@ -1,17 +1,27 @@
 import Link from "next/link";
 import { MdLogin } from 'react-icons/md';
 import { VscWorkspaceUntrusted } from 'react-icons/vsc';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@components/Button";
 import { useModal } from "@hooks/useModal";
+import { useScrollBlock } from "@hooks/useScrollBlock";
 import { Modal } from "@components/Modal";
 import { NavbarWrapper, NavbarContent, Nav, Menu, Logo, MenuLink, Access, MobileMenuIcon, ModalWarnIcon, ModalWarnTitle, ModalWarnDescription } from "./styles";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const { modalOpen, setModalOpen } = useModal();
-  
+  const scrollBlock = useScrollBlock();
+
+  useEffect(() => {
+    if (open) {
+      scrollBlock.blockScroll();
+    } else {
+      scrollBlock.allowScroll();
+    }
+  }, [open, scrollBlock]);
+
   function handleMobileBtnClick() {
     setOpen(state => !state);
   }

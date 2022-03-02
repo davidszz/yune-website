@@ -16,6 +16,8 @@ export const GlobalStyles = createGlobalStyle`
     --white: #fff;
     --scrollbar: #323238;
     --red: #ED4245;
+    --yellow: #FEE75C;
+    --pink: #EB459E;
     --anchor-link: #58adfc;
   }
 
