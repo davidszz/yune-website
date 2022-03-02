@@ -12,17 +12,25 @@ export const NavbarWrapper = styled.header`
   justify-content: center;
   align-items: center;
 
+  background-color: var(--background);
+  
   border-bottom: 1px solid var(--borders);
+
+  transition: height 300ms;
   
   z-index: 500;
+  
+  @media (max-width: 768px) {
+    height: 78px;
+  }
 `;
 
 export const NavbarContent = styled.div`
   width: 1120px;
   height: 100%;
   
-  margin: 0 auto;
-  padding: 0 16px;
+  margin: 0 24px;
+  padding: 0;
 
   display: flex;
   align-items: center;
@@ -92,7 +100,7 @@ export const Menu = styled.ul`
 
 export const MenuLink = styled.li`
   font-size: 1rem;
-  color: var(--suport);
+  color: var(--support);
 
   margin-left: 32px;
   margin-top: 0;
@@ -125,4 +133,42 @@ export const MobileMenuIcon = styled.div`
   @media (max-width: 1200px) {
     display: block;
   }
+`;
+
+export const ModalWarnIcon = styled.div`
+  width: 100%;
+  
+  display: flex;
+  justify-content: center;
+
+  margin-bottom: 24px;
+
+  & > svg {
+    color: var(--red);
+  }
+`;
+
+export const ModalWarnTitle = styled.h2`
+  width: 90%;
+
+  font-size: 1.4rem;
+  font-weight: 500;
+
+  text-align: center;
+
+  margin: 0 auto;
+`;
+
+export const ModalWarnDescription = styled.div`
+  width: 90%;
+
+  font-size: .9rem;
+  font-weight: 400;
+
+  text-align: center;
+
+  margin: 0 auto;
+  margin-top: 16px;
+
+  padding-bottom: 24px;
 `;

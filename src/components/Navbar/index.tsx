@@ -1,12 +1,16 @@
 import Link from "next/link";
 import { MdLogin } from 'react-icons/md';
+import { VscWorkspaceUntrusted } from 'react-icons/vsc';
 import { useState } from "react";
 
 import { Button } from "@components/Button";
-import { NavbarWrapper, NavbarContent, Nav, Menu, Logo, MenuLink, Access, MobileMenuIcon } from "./styles";
+import { useModal } from "@hooks/useModal";
+import { Modal } from "@components/Modal";
+import { NavbarWrapper, NavbarContent, Nav, Menu, Logo, MenuLink, Access, MobileMenuIcon, ModalWarnIcon, ModalWarnTitle, ModalWarnDescription } from "./styles";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const { modalOpen, setModalOpen } = useModal();
   
   function handleMobileBtnClick() {
     setOpen(state => !state);
@@ -17,7 +21,7 @@ export function Navbar() {
       <NavbarContent>
         <Link href="/">
           <a>
-            <Logo src="/logo.svg" width="56px" height="56px" />
+            <Logo src="/yune.png" width="120px" height="30px" />
           </a>
         </Link>
         <Nav open={open}>
@@ -37,7 +41,13 @@ export function Navbar() {
           </Menu>
         </Nav>
         <Access>
-          <Button uppercase transparent icon={MdLogin}>
+          <Button 
+            uppercase 
+            transparent 
+            icon={MdLogin} 
+            iconColor="var(--primary)"
+            onClick={() => setModalOpen(true)}
+          >
             Login
           </Button>
         </Access>
@@ -56,6 +66,24 @@ export function Navbar() {
           )}
         </MobileMenuIcon>
       </NavbarContent>
+
+      <Modal 
+        open={modalOpen}
+        width={500}
+        handleClose={() => setModalOpen(false)}
+      >
+        <ModalWarnIcon>
+          <VscWorkspaceUntrusted size="88px"/>
+        </ModalWarnIcon>
+        <ModalWarnTitle>
+          Login temporáriamente desativado!
+        </ModalWarnTitle>
+        <ModalWarnDescription>
+          O sistema de login foi desativado temporariamente para a criação do painel de controle do site.
+          Não há previsão de quando a volta acontecerá, mas você pode ficar por dentro de tudo que
+          está acontecendo entrando em nosso <a href="/discord" target="_blank">servidor de suporte</a>.
+        </ModalWarnDescription>
+      </Modal>
     </NavbarWrapper>
-  )
+  );
 }

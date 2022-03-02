@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-export interface ButtonProps {
+export interface IButtonProps {
   outlined?: boolean;
   uppercase?: boolean;
   transparent?: boolean;
 }
 
-export const Container = styled.button<ButtonProps>`
+export const Container = styled.button<IButtonProps>`
   display: flex;
   align-items: center;
 
@@ -28,7 +28,11 @@ export const Container = styled.button<ButtonProps>`
     transition: background 300ms;
 
     &:hover {
-      background: ${(props) => props.transparent ? 'none' : 'var(--primary)'};
+      background: ${(props) => {
+        if (props.transparent) return 'none';
+        if (props.outlined) return 'var(--primary)';
+        return 'var(--primary-hover)';
+      }};
     }
   }
 

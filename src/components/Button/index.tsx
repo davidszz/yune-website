@@ -1,23 +1,25 @@
-import type { ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
 import type { IconType } from "react-icons";
 
-import { Container, ButtonProps, IconWrapper } from './styles';
+import { Container, IButtonProps, IconWrapper } from './styles';
 
-interface Props extends ButtonProps {
+interface IProps extends IButtonProps {
   children?: ReactNode;
   disabled?: boolean;
   icon?: IconType;
+  iconColor?: string;
+  onClick?: (element: MouseEvent) => void;
 }
 
-export function Button(props: Props) {
+export function Button(props: IProps) {
   return (
-    <Container {...props}>
+    <Container {...props} onClick={props.onClick}>
       {props.icon && (
         <IconWrapper>
-          <props.icon size="16px" />
+          <props.icon size="16px" color={props.iconColor ?? 'inherit'} />
         </IconWrapper>
       )}
       {props.children}
     </Container>
-  )
+  );
 }

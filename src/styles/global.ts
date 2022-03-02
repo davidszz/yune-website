@@ -4,13 +4,18 @@ export const GlobalStyles = createGlobalStyle`
   :root {
     --background: #13131a;
     --background-hover: #20202b;
+    --modal-background: #20202b;
     --primary: #0084ff;
+    --primary-hover: #006acc;
     --gray: #e1e1e1;
     --text: #a8a8b3;
     --base-text: #c4c4cc;
     --borders: #323238;
     --support: #737380;
     --white: #fff;
+    --scrollbar: #323238;
+    --red: #ED4245;
+    --anchor-link: #58adfc;
   }
 
   * {
@@ -43,5 +48,22 @@ export const GlobalStyles = createGlobalStyle`
     &:hover {
       outline: none;
     }
+  }
+
+  a {
+    color: var(--anchor-link);
+    text-decoration: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
   }
 `;
