@@ -4,19 +4,23 @@ export interface IButtonProps {
   outlined?: boolean;
   uppercase?: boolean;
   transparent?: boolean;
+  size?: number;
+  hoverDelay?: number;
 }
+
+const resize = (size = 1, val: number) => String(size * val);
 
 export const Container = styled.button<IButtonProps>`
   display: flex;
   align-items: center;
 
-  font-size: .75rem;
+  font-size: ${(props) => resize(props.size, .75)}rem;
   font-weight: 600;
   
-  padding: 12px 24px;
+  padding: ${(props) => `${resize(props.size, 12)}px ${resize(props.size, 24)}px`};
 
   border: ${(props) => props.outlined ? '1px solid var(--primary)' : 'none'};
-  border-radius: 6px;
+  border-radius: 4px;
 
   background: ${(props) => props.outlined || props.transparent ? 'none' : 'var(--primary)'};
 
@@ -25,7 +29,7 @@ export const Container = styled.button<IButtonProps>`
   text-transform: ${(props) => props.uppercase ? 'uppercase' : ''};
 
   &:not(:disabled) {
-    transition: background 300ms;
+    transition: background ${(props) => props.hoverDelay ?? 300}ms;
 
     &:hover {
       background: ${(props) => {

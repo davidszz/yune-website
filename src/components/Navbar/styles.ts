@@ -35,6 +35,10 @@ export const NavbarContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    margin: 0 12px;
+  }
 `;
 
 export const Logo = styled(Image)`
@@ -100,13 +104,13 @@ export const Menu = styled.ul`
 
 export const MenuLink = styled.li`
   font-size: 1rem;
-  color: var(--support);
 
   margin-left: 32px;
   margin-top: 0;
 
   & > a {
     padding: 32px 0;
+    color: var(--support);
 
     cursor: pointer;
     transition: color 300ms;

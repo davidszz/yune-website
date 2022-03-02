@@ -7,6 +7,7 @@ export const GlobalStyles = createGlobalStyle`
     --modal-background: #20202b;
     --primary: #0084ff;
     --primary-hover: #006acc;
+    --primary-darker: #00519c;
     --gray: #e1e1e1;
     --text: #a8a8b3;
     --base-text: #c4c4cc;

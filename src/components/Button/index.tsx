@@ -16,7 +16,7 @@ export function Button(props: IProps) {
     <Container {...props} onClick={props.onClick}>
       {props.icon && (
         <IconWrapper>
-          <props.icon size="16px" color={props.iconColor ?? 'inherit'} />
+          <props.icon size={`${16 * (props.size ?? 1)}px`} color={props.iconColor ?? 'inherit'} />
         </IconWrapper>
       )}
       {props.children}

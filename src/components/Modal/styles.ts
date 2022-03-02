@@ -14,7 +14,7 @@ export const Overlay = styled.div`
   width: 100%;
   height: 100%;
 
-  background-color: rgba(0,0,0,.3);
+  background-color: rgba(0,0,0,.6);
 
   display: flex;
   justify-content: center;
@@ -29,6 +29,7 @@ export const Container = styled.div<IModalProps>`
   background: var(--modal-background);
 
   margin: 24px;
+  padding: 16px;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -66,8 +67,6 @@ export const Container = styled.div<IModalProps>`
 export const ModalHeader = styled.header`
   width: 100%;
 
-  padding: 12px 16px;
-
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -98,8 +97,6 @@ export const CloseBtn = styled.div`
 
 export const ModalBody = styled.div`
   max-height: 80vh;
-
-  padding: 12px;
 
   overflow-y: auto;
 `;
