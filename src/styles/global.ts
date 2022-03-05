@@ -15,9 +15,10 @@ export const GlobalStyles = createGlobalStyle`
     --support: #737380;
     --white: #fff;
     --scrollbar: #323238;
-    --red: #ED4245;
-    --yellow: #FEE75C;
-    --pink: #EB459E;
+    --red: #ed4245;
+    --yellow: #fee75C;
+    --pink: #eb459e;
+    --black: #000000;
     --anchor-link: #58adfc;
   }
 
