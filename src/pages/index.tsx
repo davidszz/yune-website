@@ -67,7 +67,7 @@ const Home: NextPage = () => {
               Por que utilizar de nossos serviços?
             </ServicesTitle>
             <Services>
-              <Service data-aos="fade-right">
+              <Service data-aos="fade-right" data-aos-delay="100">
                 <FaCode size="56px" color="var(--primary)"/>
                 <ServiceTitle>
                   Clean Code
@@ -89,7 +89,7 @@ const Home: NextPage = () => {
                 </ServiceDescription>
               </Service>
 
-              <Service data-aos="fade-right" data-aos-delay="400">
+              <Service data-aos="fade-right" data-aos-delay="300">
                 <FaPaintRoller size="56px" color="var(--pink)"/>
                 <ServiceTitle>
                   Customização
