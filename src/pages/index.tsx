@@ -5,6 +5,7 @@ import Aos from 'aos';
 import 'aos/dist/aos.css';
 
 import { Navbar } from '@components/Navbar'
+import { Footer } from '@components/Footer'
 import { Head } from '@components/Head';
 import { OverlayWrapper } from '@components/OverlayWrapper';
 import { Button } from '@components/Button';
@@ -158,6 +159,7 @@ const Home: NextPage = () => {
           </TeamWrapper>
         </Section>
       </Main>
+      <Footer />
     </OverlayWrapper>
   );
 }
