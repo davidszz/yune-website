@@ -107,19 +107,27 @@ export function UserCard({
     }
 
     if (spotify) {
-      if (spotifyTimer >= spotify.timestamps.end - spotify.timestamps.start) {
-        return;
-      }
+      setSpotifyTimer(Date.now() - spotify.timestamps.start);
+      
+      timerRef.current = setInterval(() => {
+        const elapsed = Date.now() - spotify.timestamps.start;
+        const duration = spotify.timestamps.end - spotify.timestamps.start;
 
-      timerRef.current = setTimeout(() => {
-        setSpotifyTimer(Math.min(Date.now() - spotify.timestamps.start, spotify.timestamps.end - spotify.timestamps.start));
+        if (elapsed >= duration) {
+          clearInterval(timerRef.current);
+          setSpotifyTimer(0);
+        } else {
+          setSpotifyTimer(elapsed);
+        }
       }, 1000);
+    } else {
+      setSpotifyTimer(0);
     }
 
     return () => {
       clearInterval(timerRef.current);
     }
-  }, [spotify, spotifyTimer]);
+  }, [spotify]);
   
   return (
     <Container {...props} listeningSpotify={!!spotify}>

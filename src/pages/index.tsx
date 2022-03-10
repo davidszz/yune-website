@@ -2,7 +2,6 @@ import 'aos/dist/aos.css';
 
 import Aos from 'aos';
 import { ActivityType } from 'discord-api-types/v10';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { FaCode, FaStar, FaPaintRoller } from 'react-icons/fa';
 import { LanyardData, useLanyard } from 'react-use-lanyard';
@@ -18,7 +17,6 @@ import { HeadLine } from '@components/HeadLine';
 import { Subtitle } from '@components/HeadLine/Subtitle';
 import { Paragraph } from '@components/HeadLine/Paragraph';
 import { UserCard } from '@components/UserCard';
-// import { SearchInput } from '@components/SearchInput';
 import { 
   Main,
   Section, 
@@ -30,15 +28,13 @@ import {
   ServiceDescription, 
   TeamWrapper, 
   Team,
-  // MatchesWrapper,
-  // MatchSearchInputWrapper,
-  // Matches,
 } from '@styles/pages/home';
 
 export default function Home() {
   const [users, setUsers] = useState<LanyardData[]>([]);
   const { loading, status } = useLanyard({ 
-    userId: TEAM_USERS_IDS, socket: true 
+    userId: TEAM_USERS_IDS, 
+    socket: true,
   });
   
   useEffect(() => {
@@ -143,35 +139,6 @@ export default function Home() {
             </Services>
           </ServicesWrapper>
         </Section>
-
-        {/* <Section>
-          <MatchesWrapper>
-            <HeadLine marginBottom='24px'>
-              <Subtitle>
-                Busque uma partida
-                <br />
-                ativa em tempo real!
-              </Subtitle>
-              <Paragraph>
-              </Paragraph>
-            </HeadLine>
-
-            <MatchSearchInputWrapper>
-              <SearchInput 
-                width="500px"
-                placeholder="Buscar por partidas..."
-                value={searchMatchInput}
-                onChange={handleSearchMatchInputChange}
-                loading={loadingSearchMatchInput}
-                disabled={loadingSearchMatchInput}
-                onPressEnter={handleSearchMatches}
-              />
-            </MatchSearchInputWrapper>
-
-            <Matches>
-            </Matches>
-          </MatchesWrapper>
-        </Section> */}
 
         <Section>
           <TeamWrapper>
