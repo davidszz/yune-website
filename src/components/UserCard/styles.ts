@@ -108,6 +108,11 @@ export const ActivityIcon = styled.div`
   margin-right: 10px;
 
   overflow: hidden;
+
+  & > img {
+    width: 60px;
+    height: 60px;
+  }
 `;
 
 export const ActivityContent = styled.div`
@@ -148,8 +153,11 @@ export const ActivityContentState = styled.div`
 
   line-height: 18px;
 
-  & > span {
+  & > img, & > span > img {
+    display: inline-block;
     margin-right: 6px!important;
     vertical-align: middle;
+    width: 18px;
+    height: 18px;
   }
 `;

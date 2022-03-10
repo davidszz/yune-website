@@ -1,5 +1,6 @@
 import { ActivityType } from "discord-api-types/v10";
 import Image from "next/image";
+import Twemoji from 'react-twemoji';
 
 import {
   IUserCardProps,
@@ -75,7 +76,8 @@ export function UserCard({
           <ActivityBody>
             {activity.icon && (
               <ActivityIcon>
-                <Image src={activity.icon} width="60px" height="60px" alt={activity.name} />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={activity.icon} alt={activity.name} />
               </ActivityIcon>
             )}
             <ActivityContent>
@@ -94,7 +96,13 @@ export function UserCard({
               {activity.state && (
                 <ActivityContentState>
                   {activity.type === ActivityType.Custom && activity.emoji && (
-                    <Image src={activity.emoji} width="22px" height="22px" alt={activity.detail} />
+                    activity.emoji.startsWith('http')
+                      ? <Image src={activity.emoji} width="22px" height="22px" alt={activity.detail} />
+                      : (
+                        <Twemoji options={{ className: 'discord-emoji' }} noWrapper={true}>
+                          <span>{activity.emoji}</span>
+                        </Twemoji>
+                      )
                   )}
                   {activity.state}
                 </ActivityContentState>

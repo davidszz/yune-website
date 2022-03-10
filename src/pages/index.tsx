@@ -1,11 +1,13 @@
 import 'aos/dist/aos.css';
 
 import Aos from 'aos';
-import { ActivityType, APIUser, GatewayActivity } from 'discord-api-types/v10';
+import { ActivityType } from 'discord-api-types/v10';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { FaCode, FaStar, FaPaintRoller } from 'react-icons/fa';
+import { LanyardData, useLanyard } from 'react-use-lanyard';
 
+import { TEAM_USERS_IDS } from '@utils/Constants';
 import { Util } from '@utils/Util';
 import { Navbar } from '@components/Navbar'
 import { Footer } from '@components/Footer'
@@ -33,131 +35,43 @@ import {
   // Matches,
 } from '@styles/pages/home';
 
-interface IPresence {
-  type: number;
-  icon?: string;
-  details?: string;
-  name?: string;
-  state?: string;
-  emoji?: string;
-}
-
 export default function Home() {
-  const [team, setTeam] = useState<{ users: (APIUser & { presence?: IPresence })[] }>();
-  const [loadingTeam, setLoadingTeam] = useState(false);
+  const [users, setUsers] = useState<LanyardData[]>([]);
+  const { loading, status } = useLanyard({ 
+    userId: TEAM_USERS_IDS, socket: true 
+  });
   
   useEffect(() => {
     Aos.init({
       duration: 400,
       once: true,
     });
-
-    async function fetchTeam() {
-      setLoadingTeam(true);
-      await fetch('/api/team')
-        .then(res => res.json())
-        .then(res => setTeam(res))
-        .finally(() => setLoadingTeam(false));
-    }
-
-    fetchTeam();
   }, []);
 
   useEffect(() => {
-    if (!team?.users.length) {
-      return;
-    }
-
-    const ws = new WebSocket('wss://api.lanyard.rest/socket');
-    const heartbeat = (interval: number) => setInterval(() => {
-      ws.send(JSON.stringify({ op: 3 }));
-    }, interval);
-
-    let interval: NodeJS.Timer | undefined;
-    ws.onopen = () => {
-      ws.send(JSON.stringify({
-        op: 2,
-        d: {
-          subscribe_to_ids: team.users.map(x => x.id),
-        },
-      }));
-    }
-
-    ws.onmessage = evt => {
-      const message = JSON.parse(evt.data) as { op: number, d: any, t: string };
-      switch (message.op) {
-        case 1: {
-          interval = heartbeat(message.d.heartbeat_interval as number);
-          break;
+    if (status) {
+      if ('discord_user' in status) {
+        setUsers(state => {
+          return [
+            ...state.filter(x => x.discord_user.id !== status.discord_user.id),
+            status,
+          ].sort((a, b) => Number(a.discord_user.id) - Number(b.discord_user.id));
+        });
+      } else {
+        const newUsers: LanyardData[] = [];
+        for (const key in status as Record<string, LanyardData>) {
+          newUsers.push(status[key]);
         }
 
-        case 0: {
-          const dataToPresence = (d: GatewayActivity): IPresence => {
-            return {
-              type: d.type,
-              details: d.details ?? undefined,
-              name: d.name,
-              icon: d.assets?.large_image ? Util.makeAssetUrl(d.assets.large_image, d.application_id) : undefined,
-              state: d.state ?? undefined,
-              emoji: d.type === ActivityType.Custom && d.emoji?.id
-                ? `https://cdn.discordapp.com/emojis/${d.emoji.id}.${d.emoji?.animated ? 'gif' : 'png'}?size=32`
-                : undefined,
-            };
-          };
-
-          if (message.t === 'INIT_STATE') {
-            const presences: (IPresence & { userId: string })[] = [];
-
-            for (const key in message.d) {
-              const data = message.d[key];
-
-              if (data.activities[0]) {
-                presences.push({
-                  userId: data.discord_user.id,
-                  ...dataToPresence(data.activities[0]),
-                });
-              }
-            }
-            
-            setTeam(state => {
-              if (!state) return state;
-              return {
-                users: state.users.map(x => {
-                  return {
-                    ...x,
-                    presence: presences.find(p => p.userId === x.id),
-                  };
-                })
-              }
-            });
-          } else if (message.t === 'PRESENCE_UPDATE') {
-            setTeam(state => {
-              if (!state) return state;
-              return {
-                users: state.users.map(x => {
-                  return {
-                    ...x,
-                    presence: message.d.activities[0] ? dataToPresence(message.d.activities[0]) : undefined,
-                  };
-                }),
-              }
-            });
-          }
-          break;
-        }
+        setUsers(state => {
+          return [
+            ...state.filter(x => !newUsers.some(u => u.discord_user.id === x.discord_user.id)),
+            ...newUsers,
+          ].sort((a, b) => Number(a.discord_user.id) - Number(b.discord_user.id));
+        });
       }
     }
-
-    return () => {
-      if (typeof interval !== 'undefined') {
-        clearInterval(interval);
-      }
-      
-      if (ws) {
-        ws.close();
-      }
-    }
-  }, [team]);
+  }, [status]);
 
   return (
     <OverlayWrapper>
@@ -271,29 +185,34 @@ export default function Home() {
             </HeadLine>
 
             <Team data-aos="fade-up">
-              {team && team.users.length > 0 ? team.users.map(user => {
+              {loading ? <div>Loading</div> : users.map(({ discord_user, activities }) => {
+                const activity = activities[0];
                 return (
-                  <Link href={`https://discord.com/users/${user.id}`} key={`team_member_profile_${user.id}`}>
+                  <Link href={`https://discord.com/users/${discord_user.id}`} key={`team_member_profile_${discord_user.id}`}>
                     <a target="_blank">
                       <UserCard 
                         height="100%"
-                        username={user.username}
-                        discriminator={user.discriminator}
-                        bannerColor={(user as any).banner_color || (user.accent_color ? user.accent_color.toString(16) : undefined)}
-                        activity={user.presence && {
-                          type: user.presence.type,
-                          name: user.presence.name,
-                          title: user.presence.details,
-                          state: user.presence.state,
-                          icon: user.presence.icon,
-                          emoji: user.presence.type === ActivityType.Custom ? user.presence.emoji : undefined,
+                        username={discord_user.username}
+                        discriminator={discord_user.discriminator}
+                        activity={activity && {
+                          type: activity.type,
+                          name: activity.name,
+                          title: (activity.type !== ActivityType.Custom && activity.name) || undefined,
+                          detail: activity.details,
+                          state: activity.state,
+                          icon: (activity.assets?.large_image && Util.makeAssetUrl(activity.assets?.large_image, activity.application_id)) || undefined,
+                          emoji: activity.type === ActivityType.Custom 
+                            ? (activity.emoji as { id?: string })?.id
+                              ? `https://cdn.discordapp.com/emoji/${(activity.emoji as any).id}.${(activity.emoji as any).animated ? 'gif' : 'png'}?size=32`
+                              : activity.emoji?.name
+                            : undefined,
                         }}
-                        avatar={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${user.avatar?.startsWith('a_') ? 'gif' : 'png'}`}
+                        avatar={`https://cdn.discordapp.com/avatars/${discord_user.id}/${discord_user.avatar}.${discord_user.avatar?.startsWith('a_') ? 'gif' : 'png'}`}
                       />
                     </a>
                   </Link>
                 );
-              }) : <div>Loading</div>}
+              })}
             </Team>
           </TeamWrapper>
         </Section>
