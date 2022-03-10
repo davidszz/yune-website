@@ -12,6 +12,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "removeComments": true,
     "jsx": "preserve",
     "incremental": true,
     "baseUrl": ".",
@@ -20,7 +21,11 @@
       "@styles/*": ["src/styles/*"],
       "@components/*": ["src/components/*"],
       "@contexts/*": ["src/contexts/*"],
-      "@hooks/*": ["src/hooks/*"]
+      "@hooks/*": ["src/hooks/*"],
+      "@database": ["src/database"],
+      "@database/*": ["src/database/*"],
+      "@services/*": ["src/services/*"],
+      "@utils/*": ["src/utils/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

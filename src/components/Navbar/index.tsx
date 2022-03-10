@@ -4,14 +4,13 @@ import { VscWorkspaceUntrusted } from 'react-icons/vsc';
 import { useEffect, useState } from "react";
 
 import { Button } from "@components/Button";
-import { useModal } from "@hooks/useModal";
 import { useScrollBlock } from "@hooks/useScrollBlock";
 import { Modal } from "@components/Modal";
 import { NavbarWrapper, NavbarContent, Nav, Menu, Logo, MenuLink, Access, MobileMenuIcon, ModalWarnIcon, ModalWarnTitle, ModalWarnDescription } from "./styles";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
-  const { modalOpen, setModalOpen } = useModal();
+  const [modalOpen, setModalOpen] = useState(false);
   const scrollBlock = useScrollBlock();
 
   useEffect(() => {

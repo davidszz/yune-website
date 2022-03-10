@@ -5,6 +5,8 @@ export const GlobalStyles = createGlobalStyle`
     --background: #13131a;
     --background-hover: #20202b;
     --modal-background: #20202b;
+    --input-background: #20202b;
+    --user-card-background: #0d0d12;
     --primary: #0084ff;
     --primary-hover: #006acc;
     --primary-darker: #00519c;
@@ -20,6 +22,7 @@ export const GlobalStyles = createGlobalStyle`
     --pink: #eb459e;
     --black: #000000;
     --anchor-link: #58adfc;
+    --spinner: #a8a8b3;
   }
 
   * {

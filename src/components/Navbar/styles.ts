@@ -48,6 +48,7 @@ export const Logo = styled(Image)`
 
 export const Nav = styled.nav<{ open?: boolean }>`
   display: flex;
+  z-index: 599;
 
   @media (max-width: 1200px) {
     display: ${(props) => props.open ? 'flex' : 'none'};
