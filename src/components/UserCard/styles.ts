@@ -10,6 +10,7 @@ export const Container = styled.div<IUserCardProps>`
   position: relative;
   
   width: 360px;
+  min-width: 300px;
   min-height: 460px;
 
   color: var(--base-text);
@@ -31,7 +32,7 @@ export const Container = styled.div<IUserCardProps>`
 
   @media (max-width: 768px) {
     width: 100%;
-    min-width: 100%;
+    min-width: 0;
   }
 
   @keyframes spotify-border {
@@ -223,6 +224,7 @@ export const SpotifyContent = styled.div`
   margin-left: 12px;
 
   width: 100%;
+  min-width: 50px;
   overflow: hidden;
 
   font-family: 'Open Sans', 'Roboto', sans-serif;
@@ -231,10 +233,6 @@ export const SpotifyContent = styled.div`
 export const SpotifySong = styled.h3`
   font-size: .95rem;
   line-height: 1.3rem;
-
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
 `;
 
 export const SpotifyAuthor = styled.div`
