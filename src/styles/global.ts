@@ -15,14 +15,17 @@ export const GlobalStyles = createGlobalStyle`
     --base-text: #c4c4cc;
     --borders: #323238;
     --support: #737380;
-    --white: #fff;
+    --white: #ffffff;
     --scrollbar: #323238;
     --red: #ed4245;
     --yellow: #fee75C;
     --pink: #eb459e;
+    --green: #57F287;
     --black: #000000;
     --anchor-link: #58adfc;
     --spinner: #a8a8b3;
+    --spotify-progress-bar: #ffffff;
+    --user-card-listening-spotify-border: #0fdb24;
   }
 
   * {

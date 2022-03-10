@@ -1,5 +1,29 @@
 export class Util {
-  static makeAssetUrl(asset: string, appId?: string, format: 'png' | 'jpg' | 'jpeg' | 'webp' | 'gif' = 'png', size: 64 | 128 | 256 | 512 | 1024 = 128) {
+  /**
+   * @param duration - Duration in miliseconds
+   */
+  static spotifyDuration(duration: number) {
+    let seconds = Math.floor(duration / 1000);
+    
+    const hours = Math.floor(seconds / 3600);
+    seconds %= 3600;
+
+    const minutes = Math.floor(seconds / 60);
+    seconds %= 60;
+    
+    const result: string[] = [];
+    if (hours > 0) result.push(String(hours.toString()));
+    result.push(String(Math.max(minutes, 0)));
+    result.push(String(Math.max(seconds, 0)).padStart(2, '0'));
+
+    return result.join(':');
+  }
+
+  static makeAssetUrl(asset?: string, appId?: string, format: 'png' | 'jpg' | 'jpeg' | 'webp' | 'gif' = 'png', size: 64 | 128 | 256 | 512 | 1024 = 128) {
+    if (!asset) {
+      return;
+    }
+    
     if (/^spotify:/.test(asset)) {
       return `https://i.scdn.co/image/${asset.slice(8)}`;
     } else if (/^twitch:/.test(asset)) {

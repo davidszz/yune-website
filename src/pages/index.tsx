@@ -185,32 +185,39 @@ export default function Home() {
             </HeadLine>
 
             <Team data-aos="fade-up">
-              {loading ? <div>Loading</div> : users.map(({ discord_user, activities }) => {
-                const activity = activities[0];
+              {loading ? <div>Loading</div> : users.map(({ discord_user, discord_status, spotify, activities }) => {
+                const customStatus = activities.find(x => x.type === ActivityType.Custom);
+                const activity = activities.filter(x => x.type !== ActivityType.Custom && !x.id.startsWith('spotify:'))[0];
+                
                 return (
-                  <Link href={`https://discord.com/users/${discord_user.id}`} key={`team_member_profile_${discord_user.id}`}>
-                    <a target="_blank">
-                      <UserCard 
-                        height="100%"
-                        username={discord_user.username}
-                        discriminator={discord_user.discriminator}
-                        activity={activity && {
-                          type: activity.type,
-                          name: activity.name,
-                          title: (activity.type !== ActivityType.Custom && activity.name) || undefined,
-                          detail: activity.details,
-                          state: activity.state,
-                          icon: (activity.assets?.large_image && Util.makeAssetUrl(activity.assets?.large_image, activity.application_id)) || undefined,
-                          emoji: activity.type === ActivityType.Custom 
-                            ? (activity.emoji as { id?: string })?.id
-                              ? `https://cdn.discordapp.com/emoji/${(activity.emoji as any).id}.${(activity.emoji as any).animated ? 'gif' : 'png'}?size=32`
-                              : activity.emoji?.name
-                            : undefined,
-                        }}
-                        avatar={`https://cdn.discordapp.com/avatars/${discord_user.id}/${discord_user.avatar}.${discord_user.avatar?.startsWith('a_') ? 'gif' : 'png'}`}
-                      />
-                    </a>
-                  </Link>
+                  <UserCard
+                    key={`team_member_profile_${discord_user.id}`}
+                    height="100%"
+                    username={discord_user.username}
+                    discriminator={discord_user.discriminator}
+                    status={discord_status}
+                    customStatus={customStatus && {
+                      emoji: customStatus.emoji,
+                      text: customStatus.state!,
+                    }}
+                    activity={activity && {
+                      type: activity.type,
+                      name: activity.name,
+                      title: activity.name,
+                      detail: activity.details,
+                      state: activity.state,
+                      icon: Util.makeAssetUrl(activity.assets?.large_image, activity.application_id),
+                      timestamps: activity.timestamps,
+                    }}
+                    spotify={spotify && {
+                      song: spotify.song,
+                      album: spotify.album,
+                      author: spotify.artist,
+                      icon: spotify.album_art_url,
+                      timestamps: spotify.timestamps,
+                    }}
+                    avatar={`https://cdn.discordapp.com/avatars/${discord_user.id}/${discord_user.avatar}.${discord_user.avatar?.startsWith('a_') ? 'gif' : 'png'}`}
+                  />
                 );
               })}
             </Team>

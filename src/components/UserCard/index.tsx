@@ -1,15 +1,19 @@
-import { ActivityType } from "discord-api-types/v10";
 import Image from "next/image";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import Twemoji from 'react-twemoji';
 
+import { Util } from "@utils/Util";
 import {
   IUserCardProps,
   Container,
-  Banner,
   Avatar,
+  Status,
+  Banner,
   Header,
   Username,
   Divider,
+  CustomStatus,
+  Activities,
   Activity,
   ActivityHeader,
   ActivityHeaderTitle,
@@ -19,6 +23,16 @@ import {
   ActivityContentTitle,
   ActivityContentDetail,
   ActivityContentState,
+  SpotifyWrapper,
+  Spotify,
+  SpotifyIcon,
+  SpotifyContent,
+  SpotifySong,
+  SpotifyAuthor,
+  SpotifyAlbum,
+  SpotifyProgress,
+  SpotifyProgressBar,
+  SpotifyProgressDuration,
 } from './styles';
 
 const ActivityTypes = [
@@ -30,11 +44,26 @@ const ActivityTypes = [
   'Competindo em:'
 ];
 
+const StatusColors = {
+  dnd: 'var(--red)',
+  idle: 'var(--yellow)',
+  online: 'var(--green)',
+  offline: 'var(--support)'
+};
+
 interface IProps extends IUserCardProps {
-  bannerColor?: string;
   avatar: string;
   username: string;
   discriminator: string;
+  status: string;
+  customStatus?: {
+    emoji?: {
+      name: string;
+      id?: string;
+      animated?: boolean;
+    };
+    text: string;
+  };
   activity?: {
     type: number;
     name?: string;
@@ -42,7 +71,20 @@ interface IProps extends IUserCardProps {
     title?: string;
     detail?: string;
     state?: string;
-    emoji?: string;
+    timestamps?: {
+      start: number;
+      end?: number;
+    };
+  };
+  spotify?: {
+    song: string;
+    author?: string;
+    album?: string;
+    icon?: string;
+    timestamps: {
+      start: number;
+      end: number;
+    };
   };
 }
 
@@ -51,65 +93,142 @@ export function UserCard({
   avatar,
   discriminator,
   username,
-  bannerColor = 'var(--primary)',
+  status,
+  customStatus,
+  spotify,
   ...props
 }: IProps) {
+  const timerRef = useRef() as MutableRefObject<NodeJS.Timeout>;
+  const [spotifyTimer, setSpotifyTimer] = useState<number>(0);
+
+  useEffect(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
+    if (spotify) {
+      if (spotifyTimer >= spotify.timestamps.end - spotify.timestamps.start) {
+        return;
+      }
+
+      timerRef.current = setTimeout(() => {
+        setSpotifyTimer(Math.min(Date.now() - spotify.timestamps.start, spotify.timestamps.end - spotify.timestamps.start));
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(timerRef.current);
+    }
+  }, [spotify, spotifyTimer]);
+  
   return (
-    <Container {...props}>
-      <Banner color={bannerColor}/>
+    <Container {...props} listeningSpotify={!!spotify}>
+      <Banner />
       <Avatar>
-        <Image src={avatar} width="80px" height="80px" alt={`${username}'s avatar`} />
+        <Image src={avatar} width="128px" height="128px" alt={`${username}'s avatar`} />
+        <Status color={StatusColors[status as keyof typeof StatusColors]} />
       </Avatar>
       <Header>
         <Username>
           {username}<span>#{discriminator}</span>
         </Username>
       </Header>
-      {activity && (
-        <Activity>
-          <Divider />
-          <ActivityHeader>
-            <ActivityHeaderTitle>
-              {`${ActivityTypes[activity.type]} ${activity.name}`}
-            </ActivityHeaderTitle>
-          </ActivityHeader>
-          <ActivityBody>
-            {activity.icon && (
-              <ActivityIcon>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={activity.icon} alt={activity.name} />
-              </ActivityIcon>
-            )}
-            <ActivityContent>
-              {activity.title && (
-                <ActivityContentTitle>
-                  {activity.title}
-                </ActivityContentTitle>
-              )}
-
-              {activity.detail && (
-                <ActivityContentDetail>
-                  {activity.detail}
-                </ActivityContentDetail>
-              )}
-
-              {activity.state && (
-                <ActivityContentState>
-                  {activity.type === ActivityType.Custom && activity.emoji && (
-                    activity.emoji.startsWith('http')
-                      ? <Image src={activity.emoji} width="22px" height="22px" alt={activity.detail} />
-                      : (
-                        <Twemoji options={{ className: 'discord-emoji' }} noWrapper={true}>
-                          <span>{activity.emoji}</span>
-                        </Twemoji>
-                      )
+      {customStatus && (
+        <CustomStatus>
+          {customStatus.emoji && (
+            customStatus.emoji.id
+            ? (
+              <span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={`https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.${customStatus.emoji.animated ? 'gif' : 'png'}`} width="18px" height="18px" alt={customStatus.emoji.name} />
+              </span>
+            )
+            : (
+              <Twemoji noWrapper={true}>
+                <span>{customStatus.emoji.name}</span>
+              </Twemoji>
+            )
+          )}
+          {customStatus.text}
+        </CustomStatus>
+      )}
+      {(activity || spotify) && (
+        <>
+          {(activity || customStatus) && (
+            <Divider />
+          )}
+          <Activities>
+            {activity && (
+              <Activity>
+                <ActivityHeader>
+                  <ActivityHeaderTitle>
+                    {`${ActivityTypes[activity.type]} ${activity.name}`}
+                  </ActivityHeaderTitle>
+                </ActivityHeader>
+                <ActivityBody>
+                  {activity.icon && (
+                    <ActivityIcon>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={activity.icon} alt={activity.name} width="60px" height="60px" />
+                    </ActivityIcon>
                   )}
-                  {activity.state}
-                </ActivityContentState>
-              )}
-            </ActivityContent>
-          </ActivityBody>
-        </Activity>
+                  <ActivityContent>
+                    {activity.title && (
+                      <ActivityContentTitle>
+                        {activity.title}
+                      </ActivityContentTitle>
+                    )}
+
+                    {activity.detail && (
+                      <ActivityContentDetail>
+                        {activity.detail}
+                      </ActivityContentDetail>
+                    )}
+
+                    {activity.state && (
+                      <ActivityContentState>
+                        {activity.state}
+                      </ActivityContentState>
+                    )}
+                  </ActivityContent>
+                </ActivityBody>
+              </Activity>
+            )}
+            {spotify && (
+              <SpotifyWrapper>
+                <Spotify>
+                  <SpotifyIcon>
+                    <Image src={spotify.icon ?? '/assets/app-icons/spotify.png'} width="88px" height="88px" alt={spotify.song} />
+                  </SpotifyIcon>
+                  <SpotifyContent>
+                    <SpotifySong>
+                      {spotify.song}
+                    </SpotifySong>
+
+                    {spotify.author && (
+                      <SpotifyAuthor>
+                        de {spotify.author}
+                      </SpotifyAuthor>
+                    )}
+
+                    {spotify.album && (
+                      <SpotifyAlbum>
+                        do álbum {spotify.album}
+                      </SpotifyAlbum>
+                    )}
+                  </SpotifyContent>
+                </Spotify>
+                <SpotifyProgress>
+                  <SpotifyProgressBar progress={Math.max(spotifyTimer / (spotify.timestamps.end - spotify.timestamps.start), 0)}/>
+                  <SpotifyProgressDuration>
+                    <span>{Util.spotifyDuration(spotifyTimer ? Math.min(spotifyTimer, spotify.timestamps.end - spotify.timestamps.start) : 0)}</span>
+                    <span>{Util.spotifyDuration(spotify.timestamps.end - spotify.timestamps.start)}</span>
+                  </SpotifyProgressDuration>
+                </SpotifyProgress>
+              </SpotifyWrapper>
+            )}
+          </Activities>
+        </>
       )}
     </Container>
   );
