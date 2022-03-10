@@ -3,8 +3,8 @@ import 'aos/dist/aos.css';
 import Aos from 'aos';
 import { ActivityType } from 'discord-api-types/v10';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { FaCode, FaPaintRoller } from 'react-icons/fa';
 import { LanyardData, useLanyard } from 'react-use-lanyard';
 
 import { TEAM_USERS_IDS } from '@utils/Constants';
@@ -19,6 +19,7 @@ import { Subtitle } from '@components/HeadLine/Subtitle';
 import { Paragraph } from '@components/HeadLine/Paragraph';
 import { UserCard } from '@components/UserCard';
 import { DotsLoader } from '@components/DotsLoader';
+import { ScrollToTop } from '@components/ScrollToTop';
 import { 
   Main,
   Section, 
@@ -80,8 +81,9 @@ export default function Home() {
 
       <Navbar />
 
+      <ScrollToTop scrollTo="main"/>
       <Main>
-        <Section className="main-section">
+        <Section id="main" className="main-section">
           <MainText>
             <h1>
               Torne o seu servidor
@@ -89,17 +91,21 @@ export default function Home() {
               um lugar melhor!
             </h1>
             <h2>Adquira um de nossos bots e deixe o seu servidor ainda melhor! Serviços de alta qualidade e sempre atualizados para você.</h2>
-            <Button
-              uppercase
-              size={1.3}
-              hoverDelay={0}
-            >
-              Servidor de suporte
-            </Button>
+            <Link href="https://discord.gg/xDwQKtqNaV">
+              <a target="_blank">
+                <Button
+                  uppercase
+                  size={1.3}
+                  hoverDelay={0}
+                >
+                  Servidor de suporte
+                </Button>
+              </a>
+            </Link>
           </MainText>
         </Section>
 
-        <Section>
+        <Section id="features">
           <FeaturesWrapper>
             <HeadLineLeft data-aos="fade-right">
               <Subtitle>
@@ -112,8 +118,8 @@ export default function Home() {
                 elegante e estilizado para os membros do seu servidor? Além de poder trocar o banner do perfil com apenas um comando!
                 <br />
                 <br />
-                Além disso, ao criar uma fila os jogadores poderão ver o rank dos jogadores além de ter uma
-                pontuação calibrada após a finalização da partida de acordo com o rank dos jogadores.
+                Além disso, ao criar uma fila os jogadores poderão ver o rank dos demais jogadores além de ter uma
+                pontuação calibrada após a finalização da partida de acordo com o rank dos demais.
               </Paragraph>
             </HeadLineLeft>
 
@@ -122,7 +128,7 @@ export default function Home() {
           </FeaturesWrapper>
         </Section>
 
-        <Section>
+        <Section id="services">
           <ServicesWrapper>
             <HeadLine data-aos="fade-up">
               <Subtitle>
@@ -203,7 +209,7 @@ export default function Home() {
           </ServicesWrapper>
         </Section>
 
-        <Section>
+        <Section id="team">
           <TeamWrapper>
             <HeadLine data-aos="fade-up">
               <Subtitle>

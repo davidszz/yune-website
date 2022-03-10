@@ -2,6 +2,7 @@ import Link from "next/link";
 import { MdLogin } from 'react-icons/md';
 import { VscWorkspaceUntrusted } from 'react-icons/vsc';
 import { useEffect, useState } from "react";
+import { Link as ScrollLink } from 'react-scroll';
 
 import { Button } from "@components/Button";
 import { useScrollBlock } from "@hooks/useScrollBlock";
@@ -36,16 +37,24 @@ export function Navbar() {
         <Nav open={open}>
           <Menu>
             <MenuLink>
-              <a>Home</a>
+              <Link href="/">
+                <a>Home</a>
+              </Link>
             </MenuLink>
             <MenuLink>
-              <a>Planos</a>
+              <ScrollLink to="features" smooth>
+                Recursos
+              </ScrollLink>
             </MenuLink>
             <MenuLink>
-              <a>Equipe</a>
+              <ScrollLink to="services" smooth>
+                Por que nós?
+              </ScrollLink>
             </MenuLink>
             <MenuLink>
-              <a>Serviços</a>
+              <ScrollLink to="team" smooth>
+                Equipe
+              </ScrollLink>
             </MenuLink>
           </Menu>
         </Nav>
