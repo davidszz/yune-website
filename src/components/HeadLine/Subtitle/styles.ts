@@ -15,10 +15,10 @@ export const Container = styled.h3<ISubtitleProps>`
 
   max-width: 680px;
 
-  margin: 0 auto;
-
   @media (max-width: 768px) {
     font-size: 1.9rem;
     line-height: 2.2rem;
+
+    text-align: ${(props) => props.textAlign ?? 'left'};
   }
 `;

@@ -2,8 +2,9 @@ import 'aos/dist/aos.css';
 
 import Aos from 'aos';
 import { ActivityType } from 'discord-api-types/v10';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { FaCode, FaStar, FaPaintRoller } from 'react-icons/fa';
+import { FaCode, FaPaintRoller } from 'react-icons/fa';
 import { LanyardData, useLanyard } from 'react-use-lanyard';
 
 import { TEAM_USERS_IDS } from '@utils/Constants';
@@ -17,17 +18,21 @@ import { HeadLine } from '@components/HeadLine';
 import { Subtitle } from '@components/HeadLine/Subtitle';
 import { Paragraph } from '@components/HeadLine/Paragraph';
 import { UserCard } from '@components/UserCard';
+import { DotsLoader } from '@components/DotsLoader';
 import { 
   Main,
   Section, 
   MainText, 
   ServicesWrapper, 
-  Services, 
-  Service, 
-  ServiceTitle, 
+  Services,
+  Service,
+  ServiceIcon,
+  ServiceTitle,
   ServiceDescription, 
   TeamWrapper, 
   Team,
+  HeadLineLeft,
+  FeaturesWrapper,
 } from '@styles/pages/home';
 
 export default function Home() {
@@ -95,9 +100,32 @@ export default function Home() {
         </Section>
 
         <Section>
+          <FeaturesWrapper>
+            <HeadLineLeft data-aos="fade-right">
+              <Subtitle>
+                Tenha os melhores
+                <br/>
+                recursos em mãos!
+              </Subtitle>
+              <Paragraph>
+                Obtenha recursos exclusivos que só nós possuímos! Já imaginou como seria irado ter um perfil
+                elegante e estilizado para os membros do seu servidor? Além de poder trocar o banner do perfil com apenas um comando!
+                <br />
+                <br />
+                Além disso, ao criar uma fila os jogadores poderão ver o rank dos jogadores além de ter uma
+                pontuação calibrada após a finalização da partida de acordo com o rank dos jogadores.
+              </Paragraph>
+            </HeadLineLeft>
+
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img data-aos="fade-right" data-aos-delay="100" src="/assets/features.png" alt="Recursos" />
+          </FeaturesWrapper>
+        </Section>
+
+        <Section>
           <ServicesWrapper>
-            <HeadLine>
-              <Subtitle data-aos="fade-up">
+            <HeadLine data-aos="fade-up">
+              <Subtitle>
                 Por que utilizar
                 <br/>
                 de nossos serviços?
@@ -105,35 +133,70 @@ export default function Home() {
             </HeadLine>
             <Services>
               <Service data-aos="fade-right" data-aos-delay="100">
-                <FaCode size="56px" color="var(--primary)"/>
+                <ServiceIcon>
+                  <Image src="/assets/icons/security.png" width="64px" height="64px" alt="Segurança"/>
+                </ServiceIcon>
                 <ServiceTitle>
-                  Clean Code
+                  Segurança
                 </ServiceTitle>
                 <ServiceDescription>
-                  Aplicamos clean code em todos nosso projetos para permitir
-                  que o desempenho de nossas aplicações alcance o nível máximo!
+                  Garantimos total segurança aos nossos clientes
+                  além de não termos acesso a suas informações.
                 </ServiceDescription>
               </Service>
 
               <Service data-aos="fade-right" data-aos-delay="200">
-                <FaStar size="56px" color="var(--yellow)"/>
+                <ServiceIcon>
+                  <Image src="/assets/icons/support.png" width="64px" height="64px" alt="Suporte"/>
+                </ServiceIcon>
                 <ServiceTitle>
-                  Avaliação
+                  Suporte 24/7
                 </ServiceTitle>
                 <ServiceDescription>
-                  Todos clientes que utilizaram ou utilizam de nossos serviços
-                  afirmam uma alta qualidade e ótimo suporte.
+                  Nossa equipe de suporte prioriza totalmente o atendimento
+                  de nossos cliente garantindo um atendimento rápido e eficiente.
                 </ServiceDescription>
               </Service>
 
               <Service data-aos="fade-right" data-aos-delay="300">
-                <FaPaintRoller size="56px" color="var(--pink)"/>
+                <ServiceIcon>
+                  <Image src="/assets/icons/host.png" width="64px" height="64px" alt="Suporte"/>
+                </ServiceIcon>
                 <ServiceTitle>
-                  Customização
+                  Hospadagem
                 </ServiceTitle>
                 <ServiceDescription>
-                  Nossos bots possuem customização de ponta a ponta para
-                  que os usuários configurem de acordo com suas preferências.
+                  Todos os bots de nossos clientes possuem
+                  hospedagem rápida com certificado de segurança
+                  em seus bots.
+                </ServiceDescription>
+              </Service>
+
+              <Service data-aos="fade-right" data-aos-delay="400">
+                <ServiceIcon>
+                  <Image src="/assets/icons/fast.png" width="64px" height="64px" alt="Suporte"/>
+                </ServiceIcon>
+                <ServiceTitle>
+                  Entrega rápida
+                </ServiceTitle>
+                <ServiceDescription>
+                  As comprar de nossos serviços são feitas de forma
+                  rápida e fácil! Assim que o cliente efetuar o pagamento
+                  uma instância será criada e entregue o mais rápido possível.
+                </ServiceDescription>
+              </Service>
+
+              <Service data-aos="fade-right" data-aos-delay="500">
+                <ServiceIcon>
+                  <Image src="/assets/icons/hidden.png" width="64px" height="64px" alt="Suporte"/>
+                </ServiceIcon>
+                <ServiceTitle>
+                  Proteção VPN
+                </ServiceTitle>
+                <ServiceDescription>
+                  Todos nossos bots utilizam de servidores proxy
+                  com criptografia de ponta a ponta para proteger
+                  suas informações e manter seus dados seguros.
                 </ServiceDescription>
               </Service>
             </Services>
@@ -142,17 +205,17 @@ export default function Home() {
 
         <Section>
           <TeamWrapper>
-            <HeadLine>
-              <Subtitle data-aos="fade-up">
+            <HeadLine data-aos="fade-up">
+              <Subtitle>
                 Conheça nossa equipe
               </Subtitle>
-              <Paragraph data-aos="fade-up">
+              <Paragraph>
                 É sempre bom saber quem está por traz dos produtos que adquirimos para termos certeza da qualidade e confiança do produto!
               </Paragraph>
             </HeadLine>
 
             <Team data-aos="fade-up">
-              {loading ? <div>Loading</div> : users.map(({ discord_user, discord_status, spotify, activities }) => {
+              {loading ? <DotsLoader scale={.5}/> : users.map(({ discord_user, discord_status, spotify, activities }) => {
                 const customStatus = activities.find(x => x.type === ActivityType.Custom);
                 const activity = activities.filter(x => x.type !== ActivityType.Custom && !x.id.startsWith('spotify:'))[0];
                 

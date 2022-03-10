@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export interface IUserCardProps {
   width?: string;
   height?: string;
-  listeningSpotify?: boolean;
 }
 
 export const Container = styled.div<IUserCardProps>`
@@ -18,13 +17,7 @@ export const Container = styled.div<IUserCardProps>`
 
   border-radius: 4px;
 
-  ${(props) => {
-    if (props.listeningSpotify) {
-      return `
-        animation: spotify-border infinite 4s ease-in-out;
-      `;
-    }
-  }}
+  box-shadow: 0 0 10px rgba(0, 0, 0, .2);
 
   overflow: hidden;
 
@@ -34,27 +27,17 @@ export const Container = styled.div<IUserCardProps>`
     width: 100%;
     min-width: 0;
   }
-
-  @keyframes spotify-border {
-    0%, 100% {
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0);
-    }
-
-    50% {
-      box-shadow: 0 0 0 1px var(--user-card-listening-spotify-border);
-    }
-  }
 `;
 
 export const Banner = styled.div`
   width: 100%;
   height: 120px;
 
-  background-color: var(--primary);
-  /* background-image: #0084FF;
+  background-color: var(--background);
+  background-image: url('/assets/banner.png');
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat; */
+  background-repeat: no-repeat;
 `;
 
 export const Avatar = styled.div`

@@ -4,7 +4,7 @@ export interface IParagraphProps {
   textAlign?: 'left' | 'center' | 'right';
 }
 
-export const Container = styled.p`
+export const Container = styled.p<IParagraphProps>`
   font-size: 1rem;
   font-weight: 400;
 
@@ -17,5 +17,9 @@ export const Container = styled.p`
   margin: 0 auto;
   margin-top: 24px;
 
-  text-align: center;
+  text-align: ${(props) => props.textAlign ?? 'center'};
+
+  @media (max-width: 768px) {
+    text-align: ${(props) => props.textAlign ?? 'left'};
+  }
 `;

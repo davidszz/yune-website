@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { HeadLine } from "@components/HeadLine";
+
 export const Main = styled.main`
   margin: 0 auto;
 `;
@@ -17,6 +19,12 @@ export const Section = styled.section`
 
   &.main-section {
     min-height: calc(100vh - 88px);
+
+    background: var(--background);
+    background-image: url('/assets/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
 
   @media (max-width: 768px) {
@@ -115,6 +123,11 @@ export const Service = styled.div`
   color: var(--gray);
 `;
 
+export const ServiceIcon = styled.div`
+  width: 64px;
+  height: 64px;
+`;
+
 export const ServiceTitle = styled.h4`
   font-size: 1.6rem;
   font-weight: 600;
@@ -170,4 +183,55 @@ export const Matches = styled.div`
 
   padding: 24px;
   margin-top: 64px;
+`;
+
+export const FeaturesWrapper = styled.div`
+  max-width: 1200px;
+  width: 90%;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+
+  & > img {
+    flex-grow: 1;
+    width: 50%;
+    max-height: 600px;
+  }
+
+  @media (max-width: 1200px) {
+    flex-direction: column;
+
+    & > img {
+      width: 80%;
+      max-height: 600px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    & > img {
+      width: 100%;
+    }
+  }
+`;
+
+export const HeadLineLeft = styled(HeadLine)`
+  @media (min-width: 1200px) {
+    width: 50%;
+    min-width: 50%;
+    align-items: flex-start!important;
+
+    & > h3 {
+      text-align: left;
+      margin: 0;
+      max-width: 500px;
+    }
+
+    & > p {
+      text-align: left;
+      margin-left: 0;
+      max-width: 500px;
+    }
+  }
 `;

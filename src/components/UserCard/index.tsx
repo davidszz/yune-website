@@ -130,7 +130,7 @@ export function UserCard({
   }, [spotify]);
   
   return (
-    <Container {...props} listeningSpotify={!!spotify}>
+    <Container {...props}>
       <Banner />
       <Avatar>
         <Image src={avatar} width="128px" height="128px" alt={`${username}'s avatar`} />
