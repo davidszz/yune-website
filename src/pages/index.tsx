@@ -168,7 +168,7 @@ export default function Home() {
                   <Image src="/assets/icons/host.png" width="64px" height="64px" alt="Suporte"/>
                 </ServiceIcon>
                 <ServiceTitle>
-                  Hospadagem
+                  Hospedagem
                 </ServiceTitle>
                 <ServiceDescription>
                   Todos os bots de nossos clientes possuem
