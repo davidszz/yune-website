@@ -39,7 +39,7 @@ export function Navbar() {
   }
 
   return (
-    <NavbarWrapper>
+    <NavbarWrapper open={open}>
       <NavbarContent>
         <Link href="/">
           <a>

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import styled from "styled-components";
 
-export const NavbarWrapper = styled.header`
+export const NavbarWrapper = styled.header<{ open?: boolean }>`
   width: 100%;
   height: 88px;
 
@@ -20,6 +20,17 @@ export const NavbarWrapper = styled.header`
   
   z-index: 1000;
   
+  @media (max-width: 1200px) {
+    ${(props) => {
+      if (props.open) {
+        return `
+          position: absolute;
+          top: 0;
+        `;
+      }
+    }}
+  }
+
   @media (max-width: 768px) {
     height: 78px;
   }
@@ -60,7 +71,7 @@ export const Nav = styled.nav<{ open?: boolean }>`
 
     width: 100%;
     height: calc(100% - 88px);
-    min-height: 400px;
+    min-height: calc(100vh - 88px);
 
     background: var(--background);
 
@@ -96,6 +107,7 @@ export const Nav = styled.nav<{ open?: boolean }>`
   @media (max-width: 768px) {
     top: 78px;
     height: calc(100% - 78px);
+    min-height: calc(100vh - 88px);
   }
 `;
 

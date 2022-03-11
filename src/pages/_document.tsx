@@ -3,16 +3,16 @@ import { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {
   static async getInitialProps(context: DocumentContext) {
-    const sheet = new ServerStyleSheet()
-    const renderPage = context.renderPage
+    const sheet = new ServerStyleSheet();
+    const renderPage = context.renderPage;
 
     try {
       context.renderPage = () =>
         renderPage({
           enhanceApp: App => props => sheet.collectStyles(<App {...props} />),
-        })
+        });
 
-      const initialProps = await Document.getInitialProps(context)
+      const initialProps = await Document.getInitialProps(context);
 
       return {
         ...initialProps,
@@ -22,9 +22,9 @@ export default class MyDocument extends Document {
             {sheet.getStyleElement()}
           </>
         ),
-      }
+      };
     } finally {
-      sheet.seal()
+      sheet.seal();
     }
   }
 
@@ -61,6 +61,6 @@ export default class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
-    )
+    );
   }
 }
