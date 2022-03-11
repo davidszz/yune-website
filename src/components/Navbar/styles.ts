@@ -18,7 +18,7 @@ export const NavbarWrapper = styled.header`
 
   transition: height 300ms;
   
-  z-index: 500;
+  z-index: 1000;
   
   @media (max-width: 768px) {
     height: 78px;
