@@ -18,7 +18,7 @@ import {
   MobileMenuIcon, 
   ModalWarnIcon, 
   ModalWarnTitle, 
-  ModalWarnDescription 
+  ModalWarnDescription
 } from "./styles";
 
 export function Navbar() {
