@@ -10,9 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@discordjs/rest": "^0.3.0",
     "aos": "^2.3.4",
-    "discord-api-types": "^0.28.0",
     "mongoose": "^6.2.4",
     "next": "12.1.0",
     "nextjs-progressbar": "^0.0.14",
@@ -42,8 +40,5 @@
   },
   "resolutions": {
     "styled-components": "^5"
-  },
-  "engines": {
-    "node": ">=16.9.0"
   }
 }

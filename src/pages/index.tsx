@@ -1,7 +1,6 @@
 import 'aos/dist/aos.css';
 
 import Aos from 'aos';
-import { ActivityType } from 'discord-api-types/v10';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -222,8 +221,8 @@ export default function Home() {
 
             <Team data-aos="fade-up">
               {loading ? <DotsLoader scale={.5}/> : users.map(({ discord_user, discord_status, spotify, activities }) => {
-                const customStatus = activities.find(x => x.type === ActivityType.Custom);
-                const activity = activities.filter(x => x.type !== ActivityType.Custom && !x.id.startsWith('spotify:'))[0];
+                const customStatus = activities.find(x => x.type === 4);
+                const activity = activities.filter(x => x.type !== 4 && !x.id.startsWith('spotify:'))[0];
                 
                 return (
                   <UserCard
