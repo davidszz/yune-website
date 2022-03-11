@@ -54,17 +54,17 @@ export function Navbar() {
               </Link>
             </MenuLink>
             <MenuLink>
-              <ScrollLink to="features" smooth onClick={handleMobileBtnClick}>
+              <ScrollLink to="features" smooth onClick={() => setOpen(false)}>
                 Recursos
               </ScrollLink>
             </MenuLink>
             <MenuLink>
-              <ScrollLink to="services" smooth onClick={handleMobileBtnClick}>
+              <ScrollLink to="services" smooth onClick={() => setOpen(false)}>
                 Por que nós?
               </ScrollLink>
             </MenuLink>
             <MenuLink>
-              <ScrollLink to="team" smooth onClick={handleMobileBtnClick}>
+              <ScrollLink to="team" smooth onClick={() => setOpen(false)}>
                 Equipe
               </ScrollLink>
             </MenuLink>
