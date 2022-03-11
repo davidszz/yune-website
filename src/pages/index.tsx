@@ -90,7 +90,7 @@ export default function Home() {
               um lugar melhor!
             </h1>
             <h2>Adquira um de nossos bots e deixe o seu servidor ainda melhor! Serviços de alta qualidade e sempre atualizados para você.</h2>
-            <Link href="https://discord.gg/xDwQKtqNaV">
+            <Link href="/discord">
               <a target="_blank">
                 <Button
                   uppercase

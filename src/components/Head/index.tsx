@@ -9,6 +9,8 @@ interface IProps {
 export function Head({ children, title }: IProps) {
   return (
     <NextHead>
+      <link rel="icon" href="/favicon.ico" />
+      
       <title>{title ?? 'Yune Store'}</title>
       {children}
     </NextHead>

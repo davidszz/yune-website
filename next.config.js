@@ -7,6 +7,15 @@ const nextConfig = {
   images: {
     domains: ['cdn.discordapp.com', 'i.scdn.co'],
   },
+  async redirects() {
+    return [
+      {
+        source: '/discord',
+        destination: 'https://discord.gg/xDwQKtqNaV',
+        permanent: false,
+      }
+    ];
+  }
 }
 
 module.exports = nextConfig
