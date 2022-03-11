@@ -45,10 +45,10 @@ const ActivityTypes = [
 ];
 
 const StatusColors = {
-  dnd: 'var(--red)',
-  idle: 'var(--yellow)',
-  online: 'var(--green)',
-  offline: 'var(--support)'
+  dnd: '#ed4245',
+  idle: '#faa81a',
+  online: '#3ba55d',
+  offline: '#747f8d'
 };
 
 interface IProps extends IUserCardProps {

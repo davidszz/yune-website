@@ -34,6 +34,7 @@ import {
   HeadLineLeft,
   FeaturesWrapper,
 } from '@styles/pages/home';
+import { HeaderFlashNotice } from '@components/HeaderFlashNotice';
 
 export default function Home() {
   const [users, setUsers] = useState<LanyardData[]>([]);
@@ -77,6 +78,10 @@ export default function Home() {
   return (
     <OverlayWrapper>
       <Head title="Yune Store - Inicio"/>
+
+      <HeaderFlashNotice storeKey={"bet-bot-ad"} removeOthersKey>
+        🎊🎉 Novo bot de apostado em breve! Fique por dentro de tudo entrando em nosso <a href="/discord" target="_blank">servidor de suporte</a>!
+      </HeaderFlashNotice>
 
       <Navbar />
 
