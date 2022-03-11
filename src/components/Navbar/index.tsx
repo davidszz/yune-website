@@ -7,7 +7,19 @@ import { Link as ScrollLink } from 'react-scroll';
 import { Button } from "@components/Button";
 import { useScrollBlock } from "@hooks/useScrollBlock";
 import { Modal } from "@components/Modal";
-import { NavbarWrapper, NavbarContent, Nav, Menu, Logo, MenuLink, Access, MobileMenuIcon, ModalWarnIcon, ModalWarnTitle, ModalWarnDescription } from "./styles";
+import { 
+  NavbarWrapper, 
+  NavbarContent, 
+  Nav, 
+  Menu, 
+  Logo, 
+  MenuLink, 
+  Access, 
+  MobileMenuIcon, 
+  ModalWarnIcon, 
+  ModalWarnTitle, 
+  ModalWarnDescription 
+} from "./styles";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -42,17 +54,17 @@ export function Navbar() {
               </Link>
             </MenuLink>
             <MenuLink>
-              <ScrollLink to="features" smooth>
+              <ScrollLink to="features" smooth onClick={handleMobileBtnClick}>
                 Recursos
               </ScrollLink>
             </MenuLink>
             <MenuLink>
-              <ScrollLink to="services" smooth>
+              <ScrollLink to="services" smooth onClick={handleMobileBtnClick}>
                 Por que nós?
               </ScrollLink>
             </MenuLink>
             <MenuLink>
-              <ScrollLink to="team" smooth>
+              <ScrollLink to="team" smooth onClick={handleMobileBtnClick}>
                 Equipe
               </ScrollLink>
             </MenuLink>
