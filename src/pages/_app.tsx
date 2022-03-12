@@ -6,11 +6,13 @@ import { AuthProvider } from '@contexts/AuthContext';
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <AuthProvider>
-      <GlobalStyles/>
-      <NProgress />
-      <Component {...pageProps} />
-    </AuthProvider>
+    <>
+        <GlobalStyles/>
+        <AuthProvider>
+          <NProgress />
+          <Component {...pageProps} />
+        </AuthProvider>
+    </>
   );
 }
 

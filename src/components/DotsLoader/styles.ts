@@ -18,6 +18,7 @@ export const Container = styled.div<IDotsLoaderProps>`
     height: ${(props) => 32 * (props.scale ?? 1)}px;
 
     border-radius: 50%;
+    transform: scale(.2);
 
     animation: scale-animation infinite 1000ms ease-in-out;
   }

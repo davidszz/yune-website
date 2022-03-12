@@ -1,12 +1,11 @@
 import Link from "next/link";
 import { MdLogin } from 'react-icons/md';
-import { VscWorkspaceUntrusted } from 'react-icons/vsc';
+// import { VscWorkspaceUntrusted } from 'react-icons/vsc';
 import { useEffect, useState } from "react";
 import { Link as ScrollLink } from 'react-scroll';
 
 import { Button } from "@components/Button";
 import { useScrollBlock } from "@hooks/useScrollBlock";
-import { Modal } from "@components/Modal";
 import { 
   NavbarWrapper, 
   NavbarContent, 
@@ -23,7 +22,6 @@ import {
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
   const scrollBlock = useScrollBlock();
 
   useEffect(() => {
@@ -76,7 +74,7 @@ export function Navbar() {
             transparent 
             icon={MdLogin} 
             iconColor="var(--primary)"
-            onClick={() => setModalOpen(true)}
+            onClick={() => window.location.href = '/login'}
           >
             Login
           </Button>
@@ -97,7 +95,7 @@ export function Navbar() {
         </MobileMenuIcon>
       </NavbarContent>
 
-      <Modal 
+      {/* <Modal 
         open={modalOpen}
         width={500}
         handleClose={() => setModalOpen(false)}
@@ -113,7 +111,7 @@ export function Navbar() {
           Não há previsão de quando a volta acontecerá, mas você pode ficar por dentro de tudo que
           está acontecendo entrando em nosso <a href="/discord" target="_blank">servidor de suporte</a>.
         </ModalWarnDescription>
-      </Modal>
+      </Modal> */}
     </NavbarWrapper>
   );
 }
