@@ -1,24 +1,28 @@
+/* eslint-disable @next/next/no-img-element */
 import 'aos/dist/aos.css';
 
 import Aos from 'aos';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { LanyardData, useLanyard } from 'react-use-lanyard';
 
+
 import { TEAM_USERS_IDS } from '@utils/Constants';
 import { Util } from '@utils/Util';
-import { Navbar } from '@components/Navbar'
+
+import { Button } from '@components/Button';
+import { DotsLoader } from '@components/DotsLoader';
 import { Footer } from '@components/Footer'
 import { Head } from '@components/Head';
-import { OverlayWrapper } from '@components/OverlayWrapper';
-import { Button } from '@components/Button';
+import { HeaderFlashNotice } from '@components/HeaderFlashNotice';
 import { HeadLine } from '@components/HeadLine';
-import { Subtitle } from '@components/HeadLine/Subtitle';
 import { Paragraph } from '@components/HeadLine/Paragraph';
-import { UserCard } from '@components/UserCard';
-import { DotsLoader } from '@components/DotsLoader';
+import { Subtitle } from '@components/HeadLine/Subtitle';
+import { Navbar } from '@components/Navbar'
+import { OverlayWrapper } from '@components/OverlayWrapper';
 import { ScrollToTop } from '@components/ScrollToTop';
+import { UserCard } from '@components/UserCard';
+
 import { 
   Main,
   Section, 
@@ -34,7 +38,7 @@ import {
   HeadLineLeft,
   FeaturesWrapper,
 } from '@styles/pages/home';
-import { HeaderFlashNotice } from '@components/HeaderFlashNotice';
+
 
 export default function Home() {
   const [users, setUsers] = useState<LanyardData[]>([]);
@@ -127,7 +131,6 @@ export default function Home() {
               </Paragraph>
             </HeadLineLeft>
 
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img data-aos="fade-right" data-aos-delay="100" src="/assets/features.png" alt="Recursos" />
           </FeaturesWrapper>
         </Section>
@@ -144,7 +147,7 @@ export default function Home() {
             <Services>
               <Service data-aos="fade-right" data-aos-delay="100">
                 <ServiceIcon>
-                  <Image src="/assets/icons/security.png" width="64px" height="64px" alt="Segurança"/>
+                  <img src="/assets/icons/security.png" alt="Segurança"/>
                 </ServiceIcon>
                 <ServiceTitle>
                   Segurança
@@ -157,7 +160,7 @@ export default function Home() {
 
               <Service data-aos="fade-right" data-aos-delay="200">
                 <ServiceIcon>
-                  <Image src="/assets/icons/support.png" width="64px" height="64px" alt="Suporte"/>
+                  <img src="/assets/icons/support.png" alt="Suporte"/>
                 </ServiceIcon>
                 <ServiceTitle>
                   Suporte 24/7
@@ -170,7 +173,7 @@ export default function Home() {
 
               <Service data-aos="fade-right" data-aos-delay="300">
                 <ServiceIcon>
-                  <Image src="/assets/icons/host.png" width="64px" height="64px" alt="Suporte"/>
+                  <img src="/assets/icons/host.png" alt="Hospedagem"/>
                 </ServiceIcon>
                 <ServiceTitle>
                   Hospedagem
@@ -184,7 +187,7 @@ export default function Home() {
 
               <Service data-aos="fade-right" data-aos-delay="400">
                 <ServiceIcon>
-                  <Image src="/assets/icons/fast.png" width="64px" height="64px" alt="Suporte"/>
+                  <img src="/assets/icons/fast.png" alt="Entrega"/>
                 </ServiceIcon>
                 <ServiceTitle>
                   Entrega rápida
@@ -198,7 +201,7 @@ export default function Home() {
 
               <Service data-aos="fade-right" data-aos-delay="500">
                 <ServiceIcon>
-                  <Image src="/assets/icons/hidden.png" width="64px" height="64px" alt="Suporte"/>
+                  <img src="/assets/icons/hidden.png" alt="Proteção"/>
                 </ServiceIcon>
                 <ServiceTitle>
                   Proteção VPN

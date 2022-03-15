@@ -1,13 +1,13 @@
 import { APIUser } from 'discord-api-types/v10';
-import { parseCookies, destroyCookie } from "nookies";
+import { parseCookies } from "nookies";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
 import { api } from "@services/api";
+
 import { LoadingScreen } from '@components/LoadingScreen';
 
 interface IAuthContextType {
   user?: APIUser | null;
-  logout: () => void;
 }
 
 interface IProps {
@@ -55,24 +55,22 @@ export function AuthProvider({ children }: IProps) {
           if (data) {
             setUser(data);
           }
-        } finally {
-          setLoading(false);
+        } catch {
+          /* Nothing */
         }
       }
+
+      setLoading(false);
     }
   }, []);
 
-  function logout() {
-    destroyCookie(undefined, 'token');
-    setUser(null);
-  }
 
   if (loading) {
     return <LoadingScreen />
   }
 
   return (
-    <AuthContext.Provider value={{ user, logout }}>
+    <AuthContext.Provider value={{ user }}>
       {children}
     </AuthContext.Provider>
   );

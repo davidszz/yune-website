@@ -1,6 +1,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 
 import { FLASH_NOTICE_KEY_REGEX, FLASH_NOTICE_KEY_TEMPLATE } from '@utils/Constants';
+
 import { Container, Notice, CloseBtn } from './styles';
 
 interface IProps {

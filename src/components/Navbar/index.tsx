@@ -1,11 +1,15 @@
+import Image from "next/image";
 import Link from "next/link";
-import { MdLogin } from 'react-icons/md';
-// import { VscWorkspaceUntrusted } from 'react-icons/vsc';
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState, MouseEvent } from "react";
+import { BiCog } from 'react-icons/bi';
+import { FaSignInAlt, FaCaretDown } from 'react-icons/fa';
+import { RiLogoutCircleLine } from 'react-icons/ri';
 import { Link as ScrollLink } from 'react-scroll';
 
-import { Button } from "@components/Button";
+import { useAuth } from "@hooks/useAuth";
 import { useScrollBlock } from "@hooks/useScrollBlock";
+import { Util } from "@utils/Util";
+
 import { 
   NavbarWrapper, 
   NavbarContent, 
@@ -13,16 +17,48 @@ import {
   Menu, 
   Logo, 
   MenuLink, 
-  Access, 
+  Access,
+  UserBox,
+  UserBoxContent,
+  UserAvatar,
+  UserUsername,
+  UserDropdownIcon,
+  UserDropdown,
+  UserDropownBtn,
+  UserDropdownSeparator,
   MobileMenuIcon, 
-  ModalWarnIcon, 
-  ModalWarnTitle, 
-  ModalWarnDescription
+  LogoLink,
+  LoginBtn,
+  NavMobile,
+  NavMobileOverlay,
+  NavMobileCloseMenuBtn,
+  NavMobileMenu,
+  NavMobileMenuItem,
+  NavMobileMenuItemLink,
+  Divider,
 } from "./styles";
 
 export function Navbar() {
+  const navMobileOverlayRef = useRef<HTMLDivElement>(null);
+  const userBoxRef = useRef<HTMLDivElement>(null);
+
   const [open, setOpen] = useState(false);
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const { user } = useAuth();
   const scrollBlock = useScrollBlock();
+
+  useEffect(() => {
+    function handleDropdownOutsideClick(ev: Event) {
+      if (showUserDropdown && !userBoxRef.current?.contains(ev.target as Node)) {
+        setShowUserDropdown(false);
+      }
+    }
+    
+    document.addEventListener('click', (event) => handleDropdownOutsideClick(event));
+    return () => {
+      document.removeEventListener('click', handleDropdownOutsideClick);
+    }
+  }, [showUserDropdown]);
 
   useEffect(() => {
     if (open) {
@@ -36,15 +72,25 @@ export function Navbar() {
     setOpen(state => !state);
   }
 
+  const handleToggleUserDropdown = useCallback(() => {
+    setShowUserDropdown(state => !state);
+  }, []);
+
+  const handleMobileOverlayClick = useCallback((e: MouseEvent) => {
+    if (navMobileOverlayRef.current === e.target) {
+      setOpen(false);
+    }
+  }, []);
+
   return (
     <NavbarWrapper open={open}>
       <NavbarContent>
-        <Link href="/">
-          <a>
+        <Link href="/" passHref>
+          <LogoLink>
             <Logo src="/yune.png" width="120px" height="30px" />
-          </a>
+          </LogoLink>
         </Link>
-        <Nav open={open}>
+        <Nav>
           <Menu>
             <MenuLink>
               <Link href="/">
@@ -52,46 +98,108 @@ export function Navbar() {
               </Link>
             </MenuLink>
             <MenuLink>
-              <ScrollLink to="features" smooth onClick={() => setOpen(false)}>
+              <ScrollLink to="features" smooth>
                 Recursos
               </ScrollLink>
             </MenuLink>
             <MenuLink>
-              <ScrollLink to="services" smooth onClick={() => setOpen(false)}>
+              <ScrollLink to="services" smooth>
                 Por que nós?
               </ScrollLink>
             </MenuLink>
             <MenuLink>
-              <ScrollLink to="team" smooth onClick={() => setOpen(false)}>
+              <ScrollLink to="team" smooth>
                 Equipe
               </ScrollLink>
             </MenuLink>
           </Menu>
         </Nav>
+
+        <NavMobileOverlay ref={navMobileOverlayRef} open={open} onClick={e => handleMobileOverlayClick(e)}>
+          <NavMobile>
+            <NavMobileCloseMenuBtn onClick={handleMobileBtnClick} />
+
+            <Link href="/" passHref>
+              <LogoLink>
+                <Logo src="/yune.png" width="120px" height="30px" />
+              </LogoLink>
+            </Link>
+
+            <Divider />
+
+            <NavMobileMenu>
+              <NavMobileMenuItem>
+                <NavMobileMenuItemLink to="main" smooth>
+                  Inicio
+                </NavMobileMenuItemLink>
+              </NavMobileMenuItem>
+              <NavMobileMenuItem>
+                <NavMobileMenuItemLink to="features" smooth>
+                  Recursos
+                </NavMobileMenuItemLink>
+              </NavMobileMenuItem>
+              <NavMobileMenuItem>
+                <NavMobileMenuItemLink to="services" smooth>
+                  Por que nós?
+                </NavMobileMenuItemLink>
+              </NavMobileMenuItem>
+              <NavMobileMenuItem>
+                <NavMobileMenuItemLink to="team" smooth>
+                  Nossa equipe
+                </NavMobileMenuItemLink>
+              </NavMobileMenuItem>
+            </NavMobileMenu>
+          </NavMobile>
+        </NavMobileOverlay>
         <Access>
-          <Button 
-            uppercase 
-            transparent 
-            icon={MdLogin} 
-            iconColor="var(--primary)"
-            onClick={() => window.location.href = '/login'}
-          >
-            Login
-          </Button>
+          {user ? (
+            <UserBox ref={userBoxRef}>
+              <UserBoxContent onClick={handleToggleUserDropdown}>
+                <UserAvatar>
+                  <Image src={Util.getUserAvatar(user)} width="32px" height="32px" alt={`Avatar de ${user.username}`}/>
+                </UserAvatar>
+                <UserUsername>
+                  {user.username}
+                </UserUsername>
+                <UserDropdownIcon open={showUserDropdown}>
+                  <FaCaretDown />
+                </UserDropdownIcon>
+              </UserBoxContent>
+              <UserDropdown open={showUserDropdown}>
+                <UserDropownBtn disabled>
+                  <span>Painel de controle</span>
+                  <div>
+                    <BiCog />
+                  </div>
+                </UserDropownBtn>
+                <UserDropdownSeparator />
+                <Link href="/logout">
+                  <a>
+                    <UserDropownBtn color="var(--red)" hoverColor="var(--red)">
+                      <span>Sair</span>
+                      <div>
+                        <RiLogoutCircleLine />
+                      </div>
+                    </UserDropownBtn>
+                  </a>
+                </Link>
+              </UserDropdown>
+            </UserBox>
+          ) : (
+            <LoginBtn 
+              onClick={() => window.location.href = '/login'}
+            >
+              <FaSignInAlt size="16px"/>
+              <span>Login</span>
+            </LoginBtn>
+          )}
         </Access>
 
         <MobileMenuIcon onClick={handleMobileBtnClick}>
-          {open ? (
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="16.9399" y="15.5309" width="22" height="2" fill="var(--primary)" transform="rotate(45 16.9399 15.5309)" />
-              <rect x="15.5257" y="31.0872" width="22" height="2" fill="var(--primary)" transform="rotate(-45 15.5257 31.0872)" />
-            </svg>
-          ) : (
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="12" y="20" width="24" height="2" fill="var(--primary)" />
-              <rect x="20" y="26" width="16" height="2" fill="var(--primary)" />
-            </svg>
-          )}
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="12" y="20" width="24" height="2" fill="var(--primary)" />
+            <rect x="20" y="26" width="16" height="2" fill="var(--primary)" />
+          </svg>
         </MobileMenuIcon>
       </NavbarContent>
 

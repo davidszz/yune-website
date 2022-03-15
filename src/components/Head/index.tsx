@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
 import NextHead from 'next/head';
+import type { ReactNode } from 'react';
 
 interface IProps {
   children?: ReactNode;

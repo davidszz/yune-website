@@ -2,6 +2,7 @@ import { useEffect, useRef, MutableRefObject } from 'react';
 import { BiSearch } from 'react-icons/bi';
 
 import { Spinner } from '@components/Spinner';
+
 import { 
   ISearchInputProps, 
   Container,

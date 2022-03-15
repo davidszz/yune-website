@@ -20,23 +20,23 @@ export const Container = styled.div<IDotsLoaderProps>`
     border-radius: 50%;
     transform: scale(.2);
 
-    animation: scale-animation infinite 1000ms ease-in-out;
+    animation: scale-animation infinite 1s cubic-bezier(0.13, 0.92, 0.45, .99);
   }
 
   & > div:nth-child(2) {
-    animation-delay: 250ms;
+    animation-delay: .15s;
   }
 
   & > div:nth-child(3) {
-    animation-delay: 500ms;
+    animation-delay: .3s;
   }
 
   @keyframes scale-animation {
-    0%, 100% {
+    0%, 50%, 100% {
       transform: scale(1);
     }
 
-    50%, 75% {
+    25%, 40% {
       transform: scale(.2);
     }
   }

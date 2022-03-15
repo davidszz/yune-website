@@ -3,6 +3,8 @@ import { createGlobalStyle } from "styled-components";
 export const GlobalStyles = createGlobalStyle`
   :root {
     --background: #13131a;
+    --background-secondary: #20202b;
+    --background-tertiary: #0b0b0f;
     --background-hover: #20202b;
     --modal-background: #20202b;
     --input-background: #20202b;
@@ -17,6 +19,7 @@ export const GlobalStyles = createGlobalStyle`
     --support: #737380;
     --white: #ffffff;
     --scrollbar: #323238;
+    --blurple: #5865F2; 
     --red: #ed4245;
     --yellow: #fee75C;
     --pink: #eb459e;

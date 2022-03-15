@@ -1,6 +1,6 @@
-import { MutableRefObject, ReactNode, useRef, MouseEvent } from 'react';
-import { CSSTransition } from 'react-transition-group';
+import { MutableRefObject, ReactNode, useRef, MouseEvent, useCallback } from 'react';
 import { MdOutlineClose } from 'react-icons/md';
+import { CSSTransition } from 'react-transition-group';
 
 import { IModalProps, Overlay, Container, ModalHeader, CloseBtn, ModalTitle, ModalBody } from './styles';
 
@@ -21,17 +21,17 @@ export function Modal({
   const overlayRef = useRef() as MutableRefObject<HTMLDivElement>;
   const nodeRef = useRef() as MutableRefObject<HTMLDivElement>;
   
-  function handleModalClose() {
+  const handleModalClose = useCallback(() => {
     if (open && handleClose) {
       handleClose();
     }
-  }
+  }, [open, handleClose]);
 
-  function handleOverlayClick(event: MouseEvent) {
-      if (overlayRef.current === event.target) {
-        handleModalClose();
-      }
-  }
+  const handleOverlayClick = useCallback((event: MouseEvent) => {
+    if (overlayRef.current === event.target) {
+      handleModalClose();
+    }
+  }, [handleModalClose]);
 
   return (
     <CSSTransition 
