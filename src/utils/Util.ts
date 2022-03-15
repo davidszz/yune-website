@@ -34,4 +34,14 @@ export class Util {
 
     return `https://cdn.discordapp.com/app-assets/${appId}/${asset}.${format}?size=${size}`;
   }
+
+  static getUserAvatar({ id, avatar, discriminator }: { id: string; avatar: string | null; discriminator: string }) {
+    if (avatar) {
+      const format = avatar.startsWith('a_') ? 'gif' : 'png';
+      return `https://cdn.discordapp.com/avatars/${id}/${avatar}.${format}?size=128&quality=lossless`;
+    }
+    
+    const defaultAvatarNumber = parseInt(discriminator.slice(-1), 10) % 5;
+    return `https://cdn.discordapp.com/embed/avatars/${defaultAvatarNumber}.png`;
+  }
 }

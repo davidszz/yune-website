@@ -3,6 +3,7 @@ import { createGlobalStyle } from "styled-components";
 export const GlobalStyles = createGlobalStyle`
   :root {
     --background: #13131a;
+    --background-secondary: #20202b;
     --background-hover: #20202b;
     --modal-background: #20202b;
     --input-background: #20202b;

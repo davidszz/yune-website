@@ -55,10 +55,12 @@ export function AuthProvider({ children }: IProps) {
           if (data) {
             setUser(data);
           }
-        } finally {
-          setLoading(false);
+        } catch {
+          /* Nothing */
         }
       }
+
+      setLoading(false);
     }
   }, []);
 

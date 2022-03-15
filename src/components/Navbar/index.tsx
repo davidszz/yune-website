@@ -1,11 +1,13 @@
+import Image from "next/image";
 import Link from "next/link";
-import { MdLogin } from 'react-icons/md';
+import { MdLogin, MdLogout } from 'react-icons/md';
 // import { VscWorkspaceUntrusted } from 'react-icons/vsc';
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState, MouseEvent } from "react";
 import { Link as ScrollLink } from 'react-scroll';
 
-import { Button } from "@components/Button";
 import { useScrollBlock } from "@hooks/useScrollBlock";
+import { useAuth } from "@hooks/useAuth";
+import { Util } from "@utils/Util";
 import { 
   NavbarWrapper, 
   NavbarContent, 
@@ -15,13 +17,25 @@ import {
   MenuLink, 
   Access, 
   MobileMenuIcon, 
-  ModalWarnIcon, 
-  ModalWarnTitle, 
-  ModalWarnDescription
+  LogoLink,
+  LoginBtn,
+  NavMobile,
+  NavMobileOverlay,
+  NavMobileCloseMenuBtn,
+  NavMobileMenu,
+  NavMobileMenuItem,
+  NavMobileMenuItemLink,
+  Divider,
+  // ModalWarnIcon, 
+  // ModalWarnTitle, 
+  // ModalWarnDescription
 } from "./styles";
 
 export function Navbar() {
+  const navMobileOverlayRef = useRef<HTMLDivElement>(null);
+
   const [open, setOpen] = useState(false);
+  const { user, logout } = useAuth();
   const scrollBlock = useScrollBlock();
 
   useEffect(() => {
@@ -36,15 +50,21 @@ export function Navbar() {
     setOpen(state => !state);
   }
 
+  const handleMobileOverlayClick = useCallback((e: MouseEvent) => {
+    if (navMobileOverlayRef.current === e.target) {
+      setOpen(false);
+    }
+  }, []);
+
   return (
     <NavbarWrapper open={open}>
       <NavbarContent>
-        <Link href="/">
-          <a>
+        <Link href="/" passHref>
+          <LogoLink>
             <Logo src="/yune.png" width="120px" height="30px" />
-          </a>
+          </LogoLink>
         </Link>
-        <Nav open={open}>
+        <Nav>
           <Menu>
             <MenuLink>
               <Link href="/">
@@ -52,46 +72,75 @@ export function Navbar() {
               </Link>
             </MenuLink>
             <MenuLink>
-              <ScrollLink to="features" smooth onClick={() => setOpen(false)}>
+              <ScrollLink to="features" smooth>
                 Recursos
               </ScrollLink>
             </MenuLink>
             <MenuLink>
-              <ScrollLink to="services" smooth onClick={() => setOpen(false)}>
+              <ScrollLink to="services" smooth>
                 Por que nós?
               </ScrollLink>
             </MenuLink>
             <MenuLink>
-              <ScrollLink to="team" smooth onClick={() => setOpen(false)}>
+              <ScrollLink to="team" smooth>
                 Equipe
               </ScrollLink>
             </MenuLink>
           </Menu>
         </Nav>
+
+        <NavMobileOverlay ref={navMobileOverlayRef} open={open} onClick={e => handleMobileOverlayClick(e)}>
+          <NavMobile>
+            <NavMobileCloseMenuBtn onClick={handleMobileBtnClick} />
+
+            <Link href="/" passHref>
+              <LogoLink>
+                <Logo src="/yune.png" width="120px" height="30px" />
+              </LogoLink>
+            </Link>
+
+            <Divider />
+
+            <NavMobileMenu>
+              <NavMobileMenuItem>
+                <NavMobileMenuItemLink to="main" smooth>
+                  Inicio
+                </NavMobileMenuItemLink>
+              </NavMobileMenuItem>
+              <NavMobileMenuItem>
+                <NavMobileMenuItemLink to="features" smooth>
+                  Recursos
+                </NavMobileMenuItemLink>
+              </NavMobileMenuItem>
+              <NavMobileMenuItem>
+                <NavMobileMenuItemLink to="services" smooth>
+                  Por que nós?
+                </NavMobileMenuItemLink>
+              </NavMobileMenuItem>
+              <NavMobileMenuItem>
+                <NavMobileMenuItemLink to="team" smooth>
+                  Nossa equipe
+                </NavMobileMenuItemLink>
+              </NavMobileMenuItem>
+            </NavMobileMenu>
+          </NavMobile>
+        </NavMobileOverlay>
         <Access>
-          <Button 
-            uppercase 
-            transparent 
-            icon={MdLogin} 
-            iconColor="var(--primary)"
-            onClick={() => window.location.href = '/login'}
-          >
-            Login
-          </Button>
+          {user ? (<></>) : (
+            <LoginBtn 
+              onClick={() => window.location.href = '/login'}
+            >
+              <MdLogin size="16px"/>
+              <span>Login</span>
+            </LoginBtn>
+          )}
         </Access>
 
         <MobileMenuIcon onClick={handleMobileBtnClick}>
-          {open ? (
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="16.9399" y="15.5309" width="22" height="2" fill="var(--primary)" transform="rotate(45 16.9399 15.5309)" />
-              <rect x="15.5257" y="31.0872" width="22" height="2" fill="var(--primary)" transform="rotate(-45 15.5257 31.0872)" />
-            </svg>
-          ) : (
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="12" y="20" width="24" height="2" fill="var(--primary)" />
-              <rect x="20" y="26" width="16" height="2" fill="var(--primary)" />
-            </svg>
-          )}
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="12" y="20" width="24" height="2" fill="var(--primary)" />
+            <rect x="20" y="26" width="16" height="2" fill="var(--primary)" />
+          </svg>
         </MobileMenuIcon>
       </NavbarContent>
 

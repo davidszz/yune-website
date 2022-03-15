@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { Link } from 'react-scroll';
 import styled from "styled-components";
 
 export const NavbarWrapper = styled.header<{ open?: boolean }>`
@@ -20,17 +21,6 @@ export const NavbarWrapper = styled.header<{ open?: boolean }>`
   
   z-index: 1000;
   
-  @media (max-width: 1200px) {
-    ${(props) => {
-      if (props.open) {
-        return `
-          position: absolute;
-          top: 0;
-        `;
-      }
-    }}
-  }
-
   @media (max-width: 768px) {
     height: 78px;
   }
@@ -52,62 +42,23 @@ export const NavbarContent = styled.div`
   }
 `;
 
-export const Logo = styled(Image)`
-  min-width: 56px;
-  min-height: 56px;
+export const LogoLink = styled.a`
+  @media (max-width: 1200px) {
+    order: 1;
+  }
 `;
 
-export const Nav = styled.nav<{ open?: boolean }>`
+export const Logo = styled(Image)`
+  min-width: 120px!important;
+  min-height: 30px!important;
+`;
+
+export const Nav = styled.nav`
   display: flex;
   z-index: 1001;
 
   @media (max-width: 1200px) {
-    display: ${(props) => props.open ? 'flex' : 'none'};
-    position: absolute;
-    top: 88px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    width: 100%;
-    height: calc(100% - 88px);
-    min-height: calc(100vh - 88px);
-
-    background: var(--background);
-
-    & > ul {
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-
-      width: 100%;
-      height: 100%;
-
-      & > li {
-        width: 100%;
-
-        background-image: linear-gradient(to right, var(--background-hover), transparent);
-
-        line-height: 64px;
-
-        margin: 4px 0!important;
-        
-        & > a {
-          display: block;
-          padding: 0 24px;
-
-          &:hover {
-            background: var(--background-hover);
-          }
-        }
-      }
-    }
-  }
-
-  @media (max-width: 768px) {
-    top: 78px;
-    height: calc(100% - 78px);
-    min-height: calc(100vh - 88px);
+    display: none;
   }
 `;
 
@@ -147,7 +98,41 @@ export const Access = styled.div`
   align-items: center;
 
   @media (max-width: 1200px) {
-    display: none;
+    order: 0;
+  }
+`;
+
+export const LoginBtn = styled.button`
+  background: none;
+  
+  outline: none;
+  border: none;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: var(--white);
+
+  cursor: pointer;
+  text-transform: uppercase;
+
+  display: flex;
+  align-items: center;
+
+  & > svg {
+    margin-right: 6px;
+    color: var(--primary);
+  }
+
+  @media (max-width: 768px) {
+    & > span {
+      display: none;
+    }
+
+    & > svg {
+      width: 24px;
+      height: 24px;
+    }
   }
 `;
 
@@ -157,9 +142,121 @@ export const MobileMenuIcon = styled.div`
 
   @media (max-width: 1200px) {
     display: block;
+    order: 2;
   }
 `;
 
+export const NavMobileOverlay = styled.div<{ open?: boolean }>`
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  z-index: 1002;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, .3);
+
+  display: ${({ open }) => open ? 'flex' : 'none'};
+
+  @media (min-width: 1200px) {
+    display: none;
+  }
+`;
+
+export const NavMobile = styled.nav`
+  position: absolute;
+  right: 0;
+  top: 0;
+  
+  width: 300px;
+  height: 100%;
+  
+  background-color: var(--background-secondary);
+
+  border-radius: 8px 0 0 8px;
+
+  padding: 24px 32px 24px 24px;
+`;
+
+export const NavMobileCloseMenuBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 24px;
+  height: 24px;
+
+  position: absolute;
+  top: 24px;
+  right: 24px;
+
+  cursor: pointer;
+
+  &::before, &::after {
+    content: '';
+    
+    position: absolute;
+    
+    height: 2px;
+    width: 80%;
+
+    background-color: var(--primary);
+  }
+
+  &::before {
+    transform: rotateZ(45deg);
+  }
+
+  &::after {
+    transform: rotateZ(-45deg);
+  }
+`;
+
+export const Divider = styled.div`
+  width: 100%;
+  height: 1px;
+  
+  margin: 12px 0;
+
+  background-color: var(--borders);
+`;
+
+export const NavMobileMenu = styled.ul`
+  margin-top: 16px;
+`;
+
+export const NavMobileMenuItem = styled.li`
+  width: 100%;
+`;
+
+export const NavMobileMenuItemLink = styled(Link)`
+  display: block;
+  padding: 12px 16px;
+
+  font-size: .95rem;
+  font-weight: 400;
+  
+  color: var(--base-text);
+
+  cursor: pointer;
+
+  border-radius: 8px;
+
+  margin-bottom: 4px;
+
+  &:hover {
+    color: white;
+    background-color: rgba(0, 0, 0, .1);
+  }
+`;
+
+/**
+ * [old] Modal warn login disabled
+ */
 export const ModalWarnIcon = styled.div`
   width: 100%;
   
