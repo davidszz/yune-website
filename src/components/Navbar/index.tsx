@@ -173,15 +173,13 @@ export function Navbar() {
                   </div>
                 </UserDropownBtn>
                 <UserDropdownSeparator />
-                <Link href="/logout">
-                  <a>
+                <Link href="/logout" passHref>
                     <UserDropownBtn color="var(--red)" hoverColor="var(--red)">
                       <span>Sair</span>
                       <div>
                         <RiLogoutCircleLine />
                       </div>
                     </UserDropownBtn>
-                  </a>
                 </Link>
               </UserDropdown>
             </UserBox>

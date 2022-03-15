@@ -1,8 +1,9 @@
-import { discordApi } from '@services/discordApi';
 import type { RESTPostOAuth2AccessTokenResult } from 'discord-api-types/v10';
 import jwt from 'jsonwebtoken';
 import type { NextApiRequest, NextApiResponse } from "next";
 import { setCookie } from 'nookies';
+
+import { discordApi } from '@services/discordApi';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
