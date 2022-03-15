@@ -1,4 +1,3 @@
-// import { api } from '@services/api';
 import jwt from 'jsonwebtoken';
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { parseCookies } from "nookies";
@@ -9,12 +8,6 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
   const { token } = parseCookies(context);
   if (token) {
     if (jwt.verify(token, process.env.JWT_SECRET)) {
-      // const response = await api.get('/users/@me', {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // });
-
       return {
         redirect: {
           destination: '/',

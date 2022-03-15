@@ -102,6 +102,154 @@ export const Access = styled.div`
   }
 `;
 
+export const UserBox = styled.div`
+  position: relative;
+`;
+
+export const UserBoxContent = styled.div`
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+`;
+
+export const UserAvatar = styled.div`
+  width: 32px;
+  height: 32px;
+  
+  & > span {
+    border-radius: 50%;
+  }
+`;
+
+export const UserUsername = styled.div`
+  margin-left: 12px;
+
+  color: var(--white);
+
+  font-size: .95rem;
+  font-weight: 500;
+
+  line-height: 1.2rem;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+export const UserDropdownIcon = styled.div<{ open?: boolean }>`
+  margin-left: 6px;
+
+  height: 12px;
+  width: 12px;
+
+  color: var(--white);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ${({ open }) => {
+    if (open) {
+      return `
+        & > svg {
+          transform: rotate(180deg);
+        }
+      `;
+    }
+  }}
+`;
+
+export const UserDropdown = styled.div<{ open?: boolean }>`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  
+  margin-top: 12px;
+  padding: 6px 8px;
+
+  width: 220px;
+  
+  background: var(--background-tertiary);
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
+
+  border-radius: 4px;
+
+  visibility: hidden;
+  transform: translateY(12px);
+  opacity: 0;
+
+  transition: visibility 300ms, transform 300ms, opacity 300ms;
+
+  ${({ open }) => {
+    if (open) {
+      return `
+        visibility: visible;
+        transform: translateY(0);
+        opacity: 1;
+      `;
+    }
+  }}
+
+  @media (max-width: 1200px) {
+    left: auto;
+    right: auto;
+    left: 0;
+  }
+`;
+
+export const UserDropownBtn = styled.div<{ hoverColor?: string; disabled?: boolean; }>`
+  width: 100%;
+
+  padding: 6px 8px;
+
+  font-size: .875rem;
+  font-weight: 500;
+
+  border-radius: 2px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: ${({ color }) => color ?? 'var(--text)'};
+
+  cursor: pointer;
+
+  & > div {
+    width: 18px;
+    height: 18px;
+    
+    font-size: 18px;
+  }
+
+  ${({ disabled, hoverColor }) => {
+    if (disabled) {
+      return `
+        opacity: .6;
+        cursor: not-allowed;
+      `;
+    }
+
+    return `
+      &:hover {
+        background-color: ${hoverColor ?? 'var(--blurple)'};
+        color: var(--gray);
+      }
+    `;
+  }}
+`;
+
+export const UserDropdownSeparator = styled.div`
+  width: 100%;
+  height: 1px;
+
+  background-color: rgba(255, 255, 255, .1);
+
+  margin: 4px 0;
+`;
+
 export const LoginBtn = styled.button`
   background: none;
   
@@ -125,13 +273,15 @@ export const LoginBtn = styled.button`
   }
 
   @media (max-width: 768px) {
+    padding: 12px;
+    
     & > span {
       display: none;
     }
 
     & > svg {
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
     }
   }
 `;
@@ -157,6 +307,7 @@ export const NavMobileOverlay = styled.div<{ open?: boolean }>`
 
   width: 100%;
   height: 100%;
+  min-height: 100vh;
 
   background-color: rgba(0, 0, 0, .3);
 

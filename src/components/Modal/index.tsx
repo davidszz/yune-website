@@ -1,6 +1,6 @@
 import { MutableRefObject, ReactNode, useRef, MouseEvent, useCallback } from 'react';
-import { CSSTransition } from 'react-transition-group';
 import { MdOutlineClose } from 'react-icons/md';
+import { CSSTransition } from 'react-transition-group';
 
 import { IModalProps, Overlay, Container, ModalHeader, CloseBtn, ModalTitle, ModalBody } from './styles';
 

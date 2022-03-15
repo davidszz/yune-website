@@ -1,13 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MdLogin, MdLogout } from 'react-icons/md';
-// import { VscWorkspaceUntrusted } from 'react-icons/vsc';
 import { useCallback, useEffect, useRef, useState, MouseEvent } from "react";
+import { BiCog } from 'react-icons/bi';
+import { FaSignInAlt, FaCaretDown } from 'react-icons/fa';
+import { RiLogoutCircleLine } from 'react-icons/ri';
 import { Link as ScrollLink } from 'react-scroll';
 
-import { useScrollBlock } from "@hooks/useScrollBlock";
 import { useAuth } from "@hooks/useAuth";
+import { useScrollBlock } from "@hooks/useScrollBlock";
 import { Util } from "@utils/Util";
+
 import { 
   NavbarWrapper, 
   NavbarContent, 
@@ -15,7 +17,15 @@ import {
   Menu, 
   Logo, 
   MenuLink, 
-  Access, 
+  Access,
+  UserBox,
+  UserBoxContent,
+  UserAvatar,
+  UserUsername,
+  UserDropdownIcon,
+  UserDropdown,
+  UserDropownBtn,
+  UserDropdownSeparator,
   MobileMenuIcon, 
   LogoLink,
   LoginBtn,
@@ -26,17 +36,29 @@ import {
   NavMobileMenuItem,
   NavMobileMenuItemLink,
   Divider,
-  // ModalWarnIcon, 
-  // ModalWarnTitle, 
-  // ModalWarnDescription
 } from "./styles";
 
 export function Navbar() {
   const navMobileOverlayRef = useRef<HTMLDivElement>(null);
+  const userBoxRef = useRef<HTMLDivElement>(null);
 
   const [open, setOpen] = useState(false);
-  const { user, logout } = useAuth();
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const { user } = useAuth();
   const scrollBlock = useScrollBlock();
+
+  useEffect(() => {
+    function handleDropdownOutsideClick(ev: Event) {
+      if (showUserDropdown && !userBoxRef.current?.contains(ev.target as Node)) {
+        setShowUserDropdown(false);
+      }
+    }
+    
+    document.addEventListener('click', (event) => handleDropdownOutsideClick(event));
+    return () => {
+      document.removeEventListener('click', handleDropdownOutsideClick);
+    }
+  }, [showUserDropdown]);
 
   useEffect(() => {
     if (open) {
@@ -49,6 +71,10 @@ export function Navbar() {
   function handleMobileBtnClick() {
     setOpen(state => !state);
   }
+
+  const handleToggleUserDropdown = useCallback(() => {
+    setShowUserDropdown(state => !state);
+  }, []);
 
   const handleMobileOverlayClick = useCallback((e: MouseEvent) => {
     if (navMobileOverlayRef.current === e.target) {
@@ -126,11 +152,42 @@ export function Navbar() {
           </NavMobile>
         </NavMobileOverlay>
         <Access>
-          {user ? (<></>) : (
+          {user ? (
+            <UserBox ref={userBoxRef}>
+              <UserBoxContent onClick={handleToggleUserDropdown}>
+                <UserAvatar>
+                  <Image src={Util.getUserAvatar(user)} width="32px" height="32px" alt={`Avatar de ${user.username}`}/>
+                </UserAvatar>
+                <UserUsername>
+                  {user.username}
+                </UserUsername>
+                <UserDropdownIcon open={showUserDropdown}>
+                  <FaCaretDown />
+                </UserDropdownIcon>
+              </UserBoxContent>
+              <UserDropdown open={showUserDropdown}>
+                <UserDropownBtn disabled>
+                  <span>Painel de controle</span>
+                  <div>
+                    <BiCog />
+                  </div>
+                </UserDropownBtn>
+                <UserDropdownSeparator />
+                <a href="/logout">
+                  <UserDropownBtn color="var(--red)" hoverColor="var(--red)">
+                    <span>Sair</span>
+                    <div>
+                      <RiLogoutCircleLine />
+                    </div>
+                  </UserDropownBtn>
+                </a>
+              </UserDropdown>
+            </UserBox>
+          ) : (
             <LoginBtn 
               onClick={() => window.location.href = '/login'}
             >
-              <MdLogin size="16px"/>
+              <FaSignInAlt size="16px"/>
               <span>Login</span>
             </LoginBtn>
           )}
