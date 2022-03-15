@@ -82,6 +82,10 @@ export function Navbar() {
     }
   }, []);
 
+  const logout = useCallback(() => {
+    window.location.href = '/logout';
+  }, []);
+
   return (
     <NavbarWrapper open={open}>
       <NavbarContent>
@@ -173,14 +177,12 @@ export function Navbar() {
                   </div>
                 </UserDropownBtn>
                 <UserDropdownSeparator />
-                <Link href="/logout" passHref>
-                    <UserDropownBtn color="var(--red)" hoverColor="var(--red)">
-                      <span>Sair</span>
-                      <div>
-                        <RiLogoutCircleLine />
-                      </div>
-                    </UserDropownBtn>
-                </Link>
+                <UserDropownBtn onClick={logout} color="var(--red)" hoverColor="var(--red)">
+                  <span>Sair</span>
+                  <div>
+                    <RiLogoutCircleLine />
+                  </div>
+                </UserDropownBtn>
               </UserDropdown>
             </UserBox>
           ) : (
