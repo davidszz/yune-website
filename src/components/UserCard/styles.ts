@@ -29,12 +29,12 @@ export const Container = styled.div<IUserCardProps>`
   }
 `;
 
-export const Banner = styled.div`
+export const Banner = styled.div<{ url?: string }>`
   width: 100%;
   height: 120px;
 
   background-color: var(--background);
-  background-image: url('/assets/banner.png');
+  background-image: url(${({ url }) => url ?? '/assets/banner.png'});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -76,6 +76,7 @@ export const Status = styled.div`
 `;
 
 export const Header = styled.div`
+  position: relative;
   padding: 80px 16px 16px;
 `;
 
@@ -89,6 +90,33 @@ export const Username = styled.span`
   & > span {
     color: var(--text);
   }
+`;
+
+export const BadgesWrapper = styled.div`
+  position: absolute;
+
+  top: 16px;
+  right: 16px;
+
+  -webkit-box-pack: end;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+
+  max-width: 50%;
+`;
+
+export const Badge = styled.div`
+  width: 18px;
+  height: 18px;
+
+  user-select: none;
+
+  pointer-events: auto;
+
+  margin: 0 2px 2px 0;
 `;
 
 export const Divider = styled.div`
@@ -147,7 +175,7 @@ export const ActivityBody = styled.div`
   align-items: center;
 `;
 
-export const ActivityIcon = styled.div`
+export const ActivityIcon = styled.div<{ url: string }>`
   width: 60px;
   height: 60px;
 
@@ -155,6 +183,11 @@ export const ActivityIcon = styled.div`
   overflow: hidden;
 
   margin-right: 12px;
+
+  background-image: url(${({ url }) => url});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 
 export const ActivityContent = styled.div`
@@ -240,7 +273,7 @@ export const SpotifyProgress = styled.div`
   margin-top: 12px;
 `;
 
-export const SpotifyProgressBar = styled.div<{ progress?: number }>`
+export const SpotifyProgressBarWrapper = styled.div`
   width: 100%;
   height: 4px;
 
@@ -253,21 +286,19 @@ export const SpotifyProgressBar = styled.div<{ progress?: number }>`
   overflow: hidden;
 
   position: relative;
+`;
 
-  &::before {
-    content: '';
+export const SpotifyProgressBar = styled.div<{ progress?: number }>`
+  position: absolute;
+  top: 0;
+  left: -${(props) => 100 - (props.progress ? props.progress * 100 : 0)}%;
 
-    position: absolute;
-    top: 0;
-    left: 0;
+  border-radius: 2px;
 
-    border-radius: 2px;
+  width: 100%;
+  height: 4px;
 
-    width: ${(props) => (props.progress ? props.progress * 100 : 0)}%;
-    height: 4px;
-
-    background-color: var(--spotify-progress-bar);
-  }
+  background-color: var(--spotify-progress-bar);
 `;
 
 export const SpotifyProgressDuration = styled.div`

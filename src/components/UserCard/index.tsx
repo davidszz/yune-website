@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
+import ReactTooltip from 'react-tooltip';
 import Twemoji from 'react-twemoji';
 
 import { Util } from '@utils/Util';
@@ -12,6 +13,8 @@ import {
   Banner,
   Header,
   Username,
+  BadgesWrapper,
+  Badge,
   Divider,
   CustomStatus,
   Activities,
@@ -32,6 +35,7 @@ import {
   SpotifyAuthor,
   SpotifyAlbum,
   SpotifyProgress,
+  SpotifyProgressBarWrapper,
   SpotifyProgressBar,
   SpotifyProgressDuration,
 } from './styles';
@@ -49,6 +53,12 @@ interface IProps extends IUserCardProps {
   avatar: string;
   username: string;
   discriminator: string;
+  bannerURL?: string;
+  badges?: {
+    name: string;
+    description: string;
+    src: string;
+  }[];
   status: string;
   customStatus?: {
     emoji?: {
@@ -87,6 +97,8 @@ export function UserCard({
   avatar,
   discriminator,
   username,
+  bannerURL,
+  badges,
   status,
   customStatus,
   spotify,
@@ -94,6 +106,10 @@ export function UserCard({
 }: IProps) {
   const timerRef = useRef() as MutableRefObject<NodeJS.Timeout>;
   const [spotifyTimer, setSpotifyTimer] = useState<number>(0);
+
+  useEffect(() => {
+    ReactTooltip.rebuild();
+  }, []);
 
   useEffect(() => {
     if (timerRef.current) {
@@ -125,7 +141,7 @@ export function UserCard({
 
   return (
     <Container {...props}>
-      <Banner />
+      <Banner url={bannerURL} />
       <Avatar>
         <Image src={avatar} width="128px" height="128px" alt={`${username}'s avatar`} />
         <Status color={StatusColors[status as keyof typeof StatusColors]} />
@@ -135,6 +151,17 @@ export function UserCard({
           {username}
           <span>#{discriminator}</span>
         </Username>
+        {!!badges?.length && (
+          <BadgesWrapper>
+            {badges.map((x, i) => {
+              return (
+                <Badge key={`badge-${i}`} data-tip={x.description}>
+                  <Image src={x.src} width="18px" height="18px" alt={x.name} />
+                </Badge>
+              );
+            })}
+          </BadgesWrapper>
+        )}
       </Header>
       {customStatus && (
         <CustomStatus>
@@ -169,12 +196,7 @@ export function UserCard({
                   <ActivityHeaderTitle>{`${ActivityTypes[activity.type]} ${activity.name}`}</ActivityHeaderTitle>
                 </ActivityHeader>
                 <ActivityBody>
-                  {activity.icon && (
-                    <ActivityIcon>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={activity.icon} alt={activity.name} width="60px" height="60px" />
-                    </ActivityIcon>
-                  )}
+                  {activity.icon && <ActivityIcon url={activity.icon} />}
                   <ActivityContent>
                     {activity.title && <ActivityContentTitle>{activity.title}</ActivityContentTitle>}
 
@@ -205,9 +227,11 @@ export function UserCard({
                   </SpotifyContent>
                 </Spotify>
                 <SpotifyProgress>
-                  <SpotifyProgressBar
-                    progress={Math.max(spotifyTimer / (spotify.timestamps.end - spotify.timestamps.start), 0)}
-                  />
+                  <SpotifyProgressBarWrapper>
+                    <SpotifyProgressBar
+                      progress={Math.max(spotifyTimer / (spotify.timestamps.end - spotify.timestamps.start), 0)}
+                    />
+                  </SpotifyProgressBarWrapper>
                   <SpotifyProgressDuration>
                     <span>
                       {Util.spotifyDuration(

@@ -38,8 +38,14 @@ import {
   FeaturesWrapper,
 } from '@styles/pages/home';
 
+interface ILanyardData extends LanyardData {
+  kv: {
+    banner?: string;
+  };
+}
+
 export default function Home() {
-  const [users, setUsers] = useState<LanyardData[]>([]);
+  const [users, setUsers] = useState<ILanyardData[]>([]);
   const { loading, status } = useLanyard({
     userId: TEAM_USERS_IDS,
     socket: true,
@@ -58,7 +64,7 @@ export default function Home() {
         setUsers((state) => {
           return [...state.filter((x) => x.discord_user.id !== status.discord_user.id), status].sort(
             (a, b) => Number(a.discord_user.id) - Number(b.discord_user.id)
-          );
+          ) as ILanyardData[];
         });
       } else {
         const newUsers: LanyardData[] = [];
@@ -70,7 +76,7 @@ export default function Home() {
           return [
             ...state.filter((x) => !newUsers.some((u) => u.discord_user.id === x.discord_user.id)),
             ...newUsers,
-          ].sort((a, b) => Number(a.discord_user.id) - Number(b.discord_user.id));
+          ].sort((a, b) => Number(a.discord_user.id) - Number(b.discord_user.id)) as ILanyardData[];
         });
       }
     }
@@ -216,7 +222,7 @@ export default function Home() {
               {loading ? (
                 <DotsLoader scale={0.5} />
               ) : (
-                users.map(({ discord_user, discord_status, spotify, activities }) => {
+                users.map(({ discord_user, discord_status, spotify, activities, kv }) => {
                   const customStatus = activities.find((x) => x.type === 4);
                   const activity = activities.filter((x) => x.type !== 4 && !x.id.startsWith('spotify:'))[0];
 
@@ -226,6 +232,18 @@ export default function Home() {
                       height="100%"
                       username={discord_user.username}
                       discriminator={discord_user.discriminator}
+                      bannerURL={kv.banner}
+                      badges={
+                        discord_user.id === '757379507358531675'
+                          ? [
+                              {
+                                name: 'Owner',
+                                description: 'Dono(a)',
+                                src: '/assets/icons/staff.png',
+                              },
+                            ]
+                          : undefined
+                      }
                       status={discord_status}
                       customStatus={
                         customStatus && {
