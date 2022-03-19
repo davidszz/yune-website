@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { parseCookies } from "nookies";
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import { parseCookies } from 'nookies';
 
 export default function Login() {}
 
@@ -12,7 +12,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
         redirect: {
           destination: '/',
           permanent: false,
-        }
+        },
       };
     }
   }
@@ -28,6 +28,6 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     redirect: {
       destination: `https://discord.com/api/oauth2/authorize?${params}`,
       permanent: false,
-    }
+    },
   };
-}
+};

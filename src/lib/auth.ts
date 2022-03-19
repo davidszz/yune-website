@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
 import type { RESTPostOAuth2AccessTokenResult } from 'discord-api-types/v10';
+import jwt from 'jsonwebtoken';
 import type { NextApiRequest } from 'next';
 import { parseCookies } from 'nookies';
 
@@ -19,7 +19,7 @@ export function getAuthInfos(req: NextApiRequest) {
     try {
       const authInfos = jwt.verify(token, process.env.JWT_SECRET) as RESTPostOAuth2AccessTokenResult;
       return authInfos;
-    } catch(err) {
+    } catch (err) {
       console.error(err);
       throw new ApiError({
         status: 401,
@@ -41,7 +41,7 @@ export function getAuthInfos(req: NextApiRequest) {
   try {
     const authInfos = jwt.verify(token, process.env.JWT_SECRET) as RESTPostOAuth2AccessTokenResult;
     return authInfos;
-  } catch(err) {
+  } catch (err) {
     console.error(err);
     throw new ApiError({
       status: 401,

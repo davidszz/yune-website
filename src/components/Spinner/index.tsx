@@ -5,7 +5,5 @@ interface IProps extends ISpinnerProps {
 }
 
 export function Spinner({ size }: IProps) {
-  return (
-    <Container size={size}/>
-  );
+  return <Container size={size} />;
 }

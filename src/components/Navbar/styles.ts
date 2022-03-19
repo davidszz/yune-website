@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Link } from 'react-scroll';
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const NavbarWrapper = styled.header<{ open?: boolean }>`
   width: 100%;
@@ -14,13 +14,13 @@ export const NavbarWrapper = styled.header<{ open?: boolean }>`
   align-items: center;
 
   background-color: var(--background);
-  
+
   border-bottom: 1px solid var(--borders);
 
   transition: height 300ms;
-  
+
   z-index: 1000;
-  
+
   @media (max-width: 768px) {
     height: 78px;
   }
@@ -29,7 +29,7 @@ export const NavbarWrapper = styled.header<{ open?: boolean }>`
 export const NavbarContent = styled.div`
   width: 1120px;
   height: 100%;
-  
+
   margin: 0 24px;
   padding: 0;
 
@@ -49,8 +49,8 @@ export const LogoLink = styled.a`
 `;
 
 export const Logo = styled(Image)`
-  min-width: 120px!important;
-  min-height: 30px!important;
+  min-width: 120px !important;
+  min-height: 30px !important;
 `;
 
 export const Nav = styled.nav`
@@ -116,7 +116,7 @@ export const UserBoxContent = styled.div`
 export const UserAvatar = styled.div`
   width: 32px;
   height: 32px;
-  
+
   & > span {
     border-radius: 50%;
   }
@@ -127,7 +127,7 @@ export const UserUsername = styled.div`
 
   color: var(--white);
 
-  font-size: .95rem;
+  font-size: 0.95rem;
   font-weight: 500;
 
   line-height: 1.2rem;
@@ -164,15 +164,15 @@ export const UserDropdown = styled.div<{ open?: boolean }>`
   position: absolute;
   top: 100%;
   right: 0;
-  
+
   margin-top: 12px;
   padding: 6px 8px;
 
   width: 220px;
-  
+
   background: var(--background-tertiary);
 
-  box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 
   border-radius: 4px;
 
@@ -199,12 +199,12 @@ export const UserDropdown = styled.div<{ open?: boolean }>`
   }
 `;
 
-export const UserDropownBtn = styled.div<{ hoverColor?: string; disabled?: boolean; }>`
+export const UserDropownBtn = styled.div<{ hoverColor?: string; disabled?: boolean }>`
   width: 100%;
 
   padding: 6px 8px;
 
-  font-size: .875rem;
+  font-size: 0.875rem;
   font-weight: 500;
 
   border-radius: 2px;
@@ -220,7 +220,7 @@ export const UserDropownBtn = styled.div<{ hoverColor?: string; disabled?: boole
   & > div {
     width: 18px;
     height: 18px;
-    
+
     font-size: 18px;
   }
 
@@ -245,14 +245,14 @@ export const UserDropdownSeparator = styled.div`
   width: 100%;
   height: 1px;
 
-  background-color: rgba(255, 255, 255, .1);
+  background-color: rgba(255, 255, 255, 0.1);
 
   margin: 4px 0;
 `;
 
 export const LoginBtn = styled.button`
   background: none;
-  
+
   outline: none;
   border: none;
 
@@ -274,7 +274,7 @@ export const LoginBtn = styled.button`
 
   @media (max-width: 768px) {
     padding: 12px;
-    
+
     & > span {
       display: none;
     }
@@ -309,9 +309,9 @@ export const NavMobileOverlay = styled.div<{ open?: boolean }>`
   height: 100%;
   min-height: 100vh;
 
-  background-color: rgba(0, 0, 0, .3);
+  background-color: rgba(0, 0, 0, 0.3);
 
-  display: ${({ open }) => open ? 'flex' : 'none'};
+  display: ${({ open }) => (open ? 'flex' : 'none')};
 
   @media (min-width: 1200px) {
     display: none;
@@ -322,10 +322,10 @@ export const NavMobile = styled.nav`
   position: absolute;
   right: 0;
   top: 0;
-  
+
   width: 300px;
   height: 100%;
-  
+
   background-color: var(--background-secondary);
 
   border-radius: 8px 0 0 8px;
@@ -347,11 +347,12 @@ export const NavMobileCloseMenuBtn = styled.div`
 
   cursor: pointer;
 
-  &::before, &::after {
+  &::before,
+  &::after {
     content: '';
-    
+
     position: absolute;
-    
+
     height: 2px;
     width: 80%;
 
@@ -370,7 +371,7 @@ export const NavMobileCloseMenuBtn = styled.div`
 export const Divider = styled.div`
   width: 100%;
   height: 1px;
-  
+
   margin: 12px 0;
 
   background-color: var(--borders);
@@ -388,9 +389,9 @@ export const NavMobileMenuItemLink = styled(Link)`
   display: block;
   padding: 12px 16px;
 
-  font-size: .95rem;
+  font-size: 0.95rem;
   font-weight: 400;
-  
+
   color: var(--base-text);
 
   cursor: pointer;
@@ -401,7 +402,7 @@ export const NavMobileMenuItemLink = styled(Link)`
 
   &:hover {
     color: white;
-    background-color: rgba(0, 0, 0, .1);
+    background-color: rgba(0, 0, 0, 0.1);
   }
 `;
 
@@ -410,7 +411,7 @@ export const NavMobileMenuItemLink = styled(Link)`
  */
 export const ModalWarnIcon = styled.div`
   width: 100%;
-  
+
   display: flex;
   justify-content: center;
 
@@ -435,7 +436,7 @@ export const ModalWarnTitle = styled.h2`
 export const ModalWarnDescription = styled.div`
   width: 90%;
 
-  font-size: .9rem;
+  font-size: 0.9rem;
   font-weight: 400;
 
   text-align: center;

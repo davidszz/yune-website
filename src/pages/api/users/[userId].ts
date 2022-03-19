@@ -1,8 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { getAuthInfos } from "@lib/auth";
-import { discordApi } from "@services/discordApi";
-import { ApiError } from "@structures/ApiError";
+import { getAuthInfos } from '@lib/auth';
+import { discordApi } from '@services/discordApi';
+import { ApiError } from '@structures/ApiError';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (userId !== '@me') {
       res.status(401).send({
         error: 'invalid_request',
-        error_description: 'Invalid user provided.'
+        error_description: 'Invalid user provided.',
       });
       return;
     }
@@ -20,12 +20,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const { data } = await discordApi.get('/users/@me', {
         headers: {
           authorization: `Bearer ${authInfos.access_token}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
       });
 
       res.status(200).send(data);
-    } catch(e) {
+    } catch (e) {
       if (e instanceof ApiError) {
         res.status(e.status).send({
           error: e.error,

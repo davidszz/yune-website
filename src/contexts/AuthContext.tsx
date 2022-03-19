@@ -1,8 +1,8 @@
 import { APIUser } from 'discord-api-types/v10';
-import { parseCookies } from "nookies";
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { parseCookies } from 'nookies';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 
-import { api } from "@services/api";
+import { api } from '@services/api';
 
 import { LoadingScreen } from '@components/LoadingScreen';
 
@@ -19,17 +19,17 @@ export const AuthContext = createContext({} as IAuthContextType);
 export function AuthProvider({ children }: IProps) {
   const [user, setUser] = useState<APIUser | null>(null);
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     const query = location.search?.slice(1).split('&');
-    const code = query.find(x => x.startsWith('code='))?.replace('code=', '');
+    const code = query.find((x) => x.startsWith('code='))?.replace('code=', '');
 
     if (code) {
       authUser(code);
     } else {
       getUser();
     }
-    
+
     async function authUser(code: string) {
       try {
         const response = await api.get(`/auth?code=${code}`);
@@ -37,7 +37,7 @@ export function AuthProvider({ children }: IProps) {
           setUser(response.data.user);
           api.defaults.headers.Authorization = `Bearer ${response.data.token}`;
         }
-      } catch(err) {
+      } catch (err) {
         console.error(err);
       } finally {
         window.history.replaceState({}, '', '/');
@@ -48,7 +48,7 @@ export function AuthProvider({ children }: IProps) {
     async function getUser() {
       const { token } = parseCookies();
       if (token) {
-        api.defaults.headers.Authorization = `Bearer ${token}`; 
+        api.defaults.headers.Authorization = `Bearer ${token}`;
 
         try {
           const { data } = await api.get('/users/@me');
@@ -64,14 +64,9 @@ export function AuthProvider({ children }: IProps) {
     }
   }, []);
 
-
   if (loading) {
-    return <LoadingScreen />
+    return <LoadingScreen />;
   }
 
-  return (
-    <AuthContext.Provider value={{ user }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>;
 }

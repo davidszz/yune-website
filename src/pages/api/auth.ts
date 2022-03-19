@@ -1,6 +1,6 @@
 import type { RESTPostOAuth2AccessTokenResult } from 'discord-api-types/v10';
 import jwt from 'jsonwebtoken';
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { setCookie } from 'nookies';
 
 import { discordApi } from '@services/discordApi';
@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.status(400).send({
         success: false,
         error: 'bad_request',
-        error_description: 'No "code" provided in the request.'
+        error_description: 'No "code" provided in the request.',
       });
       return;
     }
@@ -33,8 +33,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           'content-type': 'application/x-www-form-urlencoded',
         },
       });
-      
-      const json = await response.json() as RESTPostOAuth2AccessTokenResult;
+
+      const json = (await response.json()) as RESTPostOAuth2AccessTokenResult;
       if (json?.access_token) {
         const token = jwt.sign(json, process.env.JWT_SECRET, {
           expiresIn: json.expires_in,
@@ -47,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const { data: user } = await discordApi.get('/users/@me', {
           headers: {
             authorization: `Bearer ${json.access_token}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
         });
 

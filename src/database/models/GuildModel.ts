@@ -4,7 +4,7 @@ interface IGuildSchema {
   _id: string;
   icon: string;
   name: string;
-};
+}
 
 const GuildSchema = new Schema<IGuildSchema>({
   _id: String,

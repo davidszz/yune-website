@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   position: absolute;
@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   right: 0;
   left: 0;
   bottom: 0;
-  
+
   width: 100%;
   height: 100%;
 

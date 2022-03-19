@@ -14,15 +14,9 @@ interface IProps {
   backgroundColor?: string;
 }
 
-export function HeaderFlashNotice({
-  children,
-  storeKey,
-  removeOthersKey,
-  removeKeys,
-  backgroundColor
-}: IProps) {
+export function HeaderFlashNotice({ children, storeKey, removeOthersKey, removeKeys, backgroundColor }: IProps) {
   const [show, setShow] = useState(false);
-  
+
   useEffect(() => {
     if (removeOthersKey) {
       for (let i = 0; i < localStorage.length; i++) {
@@ -35,7 +29,7 @@ export function HeaderFlashNotice({
         }
       }
     }
-    
+
     const fullKey = FLASH_NOTICE_KEY_TEMPLATE.replace('{key}', storeKey);
     if (!Boolean(localStorage.getItem(fullKey))) {
       setShow(true);
@@ -51,10 +45,8 @@ export function HeaderFlashNotice({
     <>
       {show && (
         <Container color={backgroundColor}>
-          <Notice>
-            {children}
-          </Notice>
-          <CloseBtn onClick={handleCloseBtnClick}/>
+          <Notice>{children}</Notice>
+          <CloseBtn onClick={handleCloseBtnClick} />
         </Container>
       )}
     </>

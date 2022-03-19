@@ -12,5 +12,5 @@ export function ScrollToTop({ scrollTo }: IProps) {
     <Container onClick={() => scroller.scrollTo(scrollTo, { smooth: true })}>
       <FaArrowUp />
     </Container>
-  )
+  );
 }

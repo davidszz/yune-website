@@ -3,12 +3,7 @@ import { BiSearch } from 'react-icons/bi';
 
 import { Spinner } from '@components/Spinner';
 
-import { 
-  ISearchInputProps, 
-  Container,
-  IconWrapper,
-  Input,
-} from './styles';
+import { ISearchInputProps, Container, IconWrapper, Input } from './styles';
 
 interface IProps extends ISearchInputProps {
   value?: string;
@@ -36,11 +31,11 @@ export function SearchInput({
       if (event.target !== inputRef.current) {
         return;
       }
-      
+
       if (disabled) {
         return;
       }
-  
+
       if (onPressEnter && event.key === 'Enter') {
         onPressEnter();
       }
@@ -49,14 +44,14 @@ export function SearchInput({
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
-    }
-  }, [disabled, onPressEnter,]);
-  
+    };
+  }, [disabled, onPressEnter]);
+
   function handleInputChange(value: string) {
     if (disabled) {
       return;
     }
-    
+
     if (onChange) {
       onChange(value);
     }
@@ -65,12 +60,17 @@ export function SearchInput({
   return (
     <Container disabled={disabled} width={width}>
       <IconWrapper>
-        <BiSearch size="24px"/>
+        <BiSearch size="24px" />
       </IconWrapper>
-      <Input ref={inputRef} disabled={disabled} type="text" placeholder={placeholder} value={value} onChange={event => handleInputChange(event.target.value)}/>
-      <IconWrapper>
-        {loading && <Spinner size="16px"/>}
-      </IconWrapper>
+      <Input
+        ref={inputRef}
+        disabled={disabled}
+        type="text"
+        placeholder={placeholder}
+        value={value}
+        onChange={(event) => handleInputChange(event.target.value)}
+      />
+      <IconWrapper>{loading && <Spinner size="16px" />}</IconWrapper>
     </Container>
   );
 }

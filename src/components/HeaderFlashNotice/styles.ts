@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   position: relative;
-  
+
   width: 100%;
 
   background-color: ${(props) => props.color ?? 'var(--primary)'};
@@ -16,14 +16,14 @@ export const Container = styled.div`
 export const Notice = styled.div`
   flex-grow: 1;
 
-  font-size: .84rem;
+  font-size: 0.84rem;
   font-weight: 400;
   font-family: 'Roboto', 'Open Sans', sans-serif;
 
   color: var(--black);
 
   & > a {
-    color: var(--green)
+    color: var(--green);
   }
 
   text-align: center;
@@ -41,7 +41,8 @@ export const CloseBtn = styled.div`
   justify-content: center;
   align-items: center;
 
-  &::before, &::after {
+  &::before,
+  &::after {
     content: '';
 
     position: absolute;

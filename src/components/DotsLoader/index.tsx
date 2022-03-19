@@ -5,9 +5,9 @@ interface IProps extends IDotsLoaderProps {}
 export function DotsLoader(props: IProps) {
   return (
     <Container {...props}>
-      <div/>
-      <div/>
-      <div/>
+      <div />
+      <div />
+      <div />
     </Container>
   );
 }

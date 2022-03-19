@@ -7,9 +7,5 @@ interface IProps extends ISubtitleProps {
 }
 
 export function Subtitle({ children, ...props }: IProps) {
-  return (
-    <Container {...props}>
-      {children}
-    </Container>
-  );
+  return <Container {...props}>{children}</Container>;
 }

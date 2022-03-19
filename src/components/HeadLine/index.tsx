@@ -7,9 +7,5 @@ interface IProps extends IHeadLineProps {
 }
 
 export function HeadLine({ children, ...props }: IProps) {
-  return (
-    <Wrapper {...props}>
-      {children}
-    </Wrapper>
-  );
+  return <Wrapper {...props}>{children}</Wrapper>;
 }

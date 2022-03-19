@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-const safeDocument = typeof document !== 'undefined' ? document : {} as Document;
+const safeDocument = typeof document !== 'undefined' ? document : ({} as Document);
 
 export function useScrollBlock() {
   const scrollBlocked = useRef(false);
@@ -11,8 +11,7 @@ export function useScrollBlock() {
     if (!body || !body.style || scrollBlocked.current) return;
 
     const scrollBarWidth = window.innerWidth - html.clientWidth;
-    const bodyPaddingRight =
-      parseInt(window.getComputedStyle(body).getPropertyValue("padding-right")) || 0;
+    const bodyPaddingRight = parseInt(window.getComputedStyle(body).getPropertyValue('padding-right')) || 0;
 
     html.style.position = 'relative'; /* [1] */
     html.style.overflow = 'hidden'; /* [2] */

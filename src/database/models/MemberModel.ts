@@ -6,7 +6,7 @@ interface IMemberSchema {
   username?: string;
   discriminator?: string;
   avatar?: string;
-};
+}
 
 const MemberSchema = new Schema<IMemberSchema>({
   userId: String,

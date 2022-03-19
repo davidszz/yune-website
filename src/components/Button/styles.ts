@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export interface IButtonProps {
   outlined?: boolean;
@@ -14,19 +14,19 @@ export const Container = styled.button<IButtonProps>`
   display: flex;
   align-items: center;
 
-  font-size: ${(props) => resize(props.size, .75)}rem;
+  font-size: ${(props) => resize(props.size, 0.75)}rem;
   font-weight: 600;
-  
+
   padding: ${(props) => `${resize(props.size, 12)}px ${resize(props.size, 24)}px`};
 
-  border: ${(props) => props.outlined ? '1px solid var(--primary)' : 'none'};
+  border: ${(props) => (props.outlined ? '1px solid var(--primary)' : 'none')};
   border-radius: 4px;
 
-  background: ${(props) => props.outlined || props.transparent ? 'none' : 'var(--primary)'};
+  background: ${(props) => (props.outlined || props.transparent ? 'none' : 'var(--primary)')};
 
   cursor: pointer;
   white-space: nowrap;
-  text-transform: ${(props) => props.uppercase ? 'uppercase' : ''};
+  text-transform: ${(props) => (props.uppercase ? 'uppercase' : '')};
 
   &:not(:disabled) {
     transition: background ${(props) => props.hoverDelay ?? 300}ms;
@@ -41,7 +41,7 @@ export const Container = styled.button<IButtonProps>`
   }
 
   &:disabled {
-    opacity: .6;
+    opacity: 0.6;
 
     cursor: not-allowed;
   }

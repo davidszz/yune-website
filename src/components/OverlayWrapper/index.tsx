@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 
 import { Wrapper } from './styles';
 
@@ -7,9 +7,5 @@ interface IProps {
 }
 
 export function OverlayWrapper({ children }: IProps) {
-  return (
-    <Wrapper>
-      {children}
-    </Wrapper>
-  )
+  return <Wrapper>{children}</Wrapper>;
 }

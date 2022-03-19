@@ -7,9 +7,5 @@ interface IProps extends IParagraphProps {
 }
 
 export function Paragraph({ children, ...props }: IProps) {
-  return (
-    <Container {...props}>
-      {children}
-    </Container>
-  );
+  return <Container {...props}>{children}</Container>;
 }

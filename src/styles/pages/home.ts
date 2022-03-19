@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { HeadLine } from "@components/HeadLine";
+import { HeadLine } from '@components/HeadLine';
 
 export const Main = styled.main`
   margin: 0 auto;
@@ -51,7 +51,7 @@ export const MainText = styled.div`
 
     text-align: center;
     line-height: 3.75rem;
-    
+
     max-width: 680px;
 
     margin-bottom: 16px;
@@ -65,7 +65,7 @@ export const MainText = styled.div`
 
     text-align: center;
     line-height: 1.625rem;
-    
+
     max-width: 472px;
 
     margin-bottom: 40px;
@@ -118,7 +118,7 @@ export const Service = styled.div`
   border: 1px solid var(--borders);
   border-radius: 4px;
 
-  background-color: rgba(255, 255, 255, .01);
+  background-color: rgba(255, 255, 255, 0.01);
 
   color: var(--gray);
 `;
@@ -220,7 +220,7 @@ export const HeadLineLeft = styled(HeadLine)`
   @media (min-width: 1200px) {
     width: 50%;
     min-width: 50%;
-    align-items: flex-start!important;
+    align-items: flex-start !important;
 
     & > h3 {
       text-align: left;

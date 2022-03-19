@@ -1,22 +1,22 @@
-import Image from "next/image";
-import Link from "next/link";
-import { useCallback, useEffect, useRef, useState, MouseEvent } from "react";
+import Image from 'next/image';
+import Link from 'next/link';
+import { useCallback, useEffect, useRef, useState, MouseEvent } from 'react';
 import { BiCog } from 'react-icons/bi';
 import { FaSignInAlt, FaCaretDown } from 'react-icons/fa';
 import { RiLogoutCircleLine } from 'react-icons/ri';
 import { Link as ScrollLink } from 'react-scroll';
 
-import { useAuth } from "@hooks/useAuth";
-import { useScrollBlock } from "@hooks/useScrollBlock";
-import { Util } from "@utils/Util";
+import { useAuth } from '@hooks/useAuth';
+import { useScrollBlock } from '@hooks/useScrollBlock';
+import { Util } from '@utils/Util';
 
-import { 
-  NavbarWrapper, 
-  NavbarContent, 
-  Nav, 
-  Menu, 
-  Logo, 
-  MenuLink, 
+import {
+  NavbarWrapper,
+  NavbarContent,
+  Nav,
+  Menu,
+  Logo,
+  MenuLink,
   Access,
   UserBox,
   UserBoxContent,
@@ -26,7 +26,7 @@ import {
   UserDropdown,
   UserDropownBtn,
   UserDropdownSeparator,
-  MobileMenuIcon, 
+  MobileMenuIcon,
   LogoLink,
   LoginBtn,
   NavMobile,
@@ -36,7 +36,7 @@ import {
   NavMobileMenuItem,
   NavMobileMenuItemLink,
   Divider,
-} from "./styles";
+} from './styles';
 
 export function Navbar() {
   const navMobileOverlayRef = useRef<HTMLDivElement>(null);
@@ -53,11 +53,11 @@ export function Navbar() {
         setShowUserDropdown(false);
       }
     }
-    
+
     document.addEventListener('click', (event) => handleDropdownOutsideClick(event));
     return () => {
       document.removeEventListener('click', handleDropdownOutsideClick);
-    }
+    };
   }, [showUserDropdown]);
 
   useEffect(() => {
@@ -69,11 +69,11 @@ export function Navbar() {
   }, [open, scrollBlock]);
 
   function handleMobileBtnClick() {
-    setOpen(state => !state);
+    setOpen((state) => !state);
   }
 
   const handleToggleUserDropdown = useCallback(() => {
-    setShowUserDropdown(state => !state);
+    setShowUserDropdown((state) => !state);
   }, []);
 
   const handleMobileOverlayClick = useCallback((e: MouseEvent) => {
@@ -119,7 +119,7 @@ export function Navbar() {
           </Menu>
         </Nav>
 
-        <NavMobileOverlay ref={navMobileOverlayRef} open={open} onClick={e => handleMobileOverlayClick(e)}>
+        <NavMobileOverlay ref={navMobileOverlayRef} open={open} onClick={(e) => handleMobileOverlayClick(e)}>
           <NavMobile>
             <NavMobileCloseMenuBtn onClick={handleMobileBtnClick} />
 
@@ -160,11 +160,9 @@ export function Navbar() {
             <UserBox ref={userBoxRef}>
               <UserBoxContent onClick={handleToggleUserDropdown}>
                 <UserAvatar>
-                  <Image src={Util.getUserAvatar(user)} width="32px" height="32px" alt={`Avatar de ${user.username}`}/>
+                  <Image src={Util.getUserAvatar(user)} width="32px" height="32px" alt={`Avatar de ${user.username}`} />
                 </UserAvatar>
-                <UserUsername>
-                  {user.username}
-                </UserUsername>
+                <UserUsername>{user.username}</UserUsername>
                 <UserDropdownIcon open={showUserDropdown}>
                   <FaCaretDown />
                 </UserDropdownIcon>
@@ -186,10 +184,8 @@ export function Navbar() {
               </UserDropdown>
             </UserBox>
           ) : (
-            <LoginBtn 
-              onClick={() => window.location.href = '/login'}
-            >
-              <FaSignInAlt size="16px"/>
+            <LoginBtn onClick={() => (window.location.href = '/login')}>
+              <FaSignInAlt size="16px" />
               <span>Login</span>
             </LoginBtn>
           )}

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export interface IModalProps {
   width?: number;
@@ -14,7 +14,7 @@ export const Overlay = styled.div`
   width: 100%;
   height: 100%;
 
-  background-color: rgba(0,0,0,.6);
+  background-color: rgba(0, 0, 0, 0.6);
 
   display: flex;
   justify-content: center;
@@ -22,7 +22,7 @@ export const Overlay = styled.div`
 `;
 
 export const Container = styled.div<IModalProps>`
-  width: ${(props) => props.width !== null ? `${props.width}px` : 'auto'};
+  width: ${(props) => (props.width !== null ? `${props.width}px` : 'auto')};
 
   border-radius: 4px;
 
@@ -43,7 +43,7 @@ export const Container = styled.div<IModalProps>`
 
   &.transition-enter {
     opacity: 0;
-    transform: scale(.6);
+    transform: scale(0.6);
   }
 
   &.transition-enter-active {
@@ -59,7 +59,7 @@ export const Container = styled.div<IModalProps>`
 
   &.transition-exit-active {
     opacity: 0;
-    transform: scale(.6);
+    transform: scale(0.6);
     transition: opacity 300ms, transform 300ms;
   }
 `;

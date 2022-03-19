@@ -16,14 +16,17 @@ interface IMatchSchema {
     discriminator?: string;
     avatar?: string;
   }[];
-};
+}
 
-const ParticipantSchema = new Schema<{ member: string; }>({
-  member: {
-    type: String,
-    ref: 'Member',
+const ParticipantSchema = new Schema<{ member: string }>(
+  {
+    member: {
+      type: String,
+      ref: 'Member',
+    },
   },
-}, { _id: false });
+  { _id: false }
+);
 
 const MatchSchema = new Schema<IMatchSchema>({
   status: Number,
@@ -32,7 +35,7 @@ const MatchSchema = new Schema<IMatchSchema>({
     type: String,
     ref: 'Guild',
   },
-  participants: [ParticipantSchema]
+  participants: [ParticipantSchema],
 });
 
-export const MatchModel = mongoose.models.Match as Model<IMatchSchema> || model<IMatchSchema>('Match', MatchSchema);
+export const MatchModel = (mongoose.models.Match as Model<IMatchSchema>) || model<IMatchSchema>('Match', MatchSchema);

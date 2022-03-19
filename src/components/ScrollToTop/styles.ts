@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   position: fixed;
@@ -14,8 +14,8 @@ export const Container = styled.div`
 
   background-color: var(--black);
   border-radius: 8px;
-  
+
   cursor: pointer;
-  
+
   z-index: 999;
 `;

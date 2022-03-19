@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export interface ISearchInputProps {
   width?: string;
@@ -35,7 +35,7 @@ export const IconWrapper = styled.div`
   align-items: center;
   justify-content: center;
 
-  color: ${(props) => props.color ?? 'var(--text)'};  
+  color: ${(props) => props.color ?? 'var(--text)'};
 `;
 
 export const Input = styled.input`

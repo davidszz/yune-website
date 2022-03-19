@@ -1,5 +1,5 @@
-import type { MouseEvent, ReactNode } from "react";
-import type { IconType } from "react-icons";
+import type { MouseEvent, ReactNode } from 'react';
+import type { IconType } from 'react-icons';
 
 import { Container, IButtonProps, IconWrapper } from './styles';
 

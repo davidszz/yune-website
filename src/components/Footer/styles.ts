@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Wrapper = styled.footer`
   width: 100%;
@@ -48,7 +48,7 @@ export const MainContentImage = styled.img`
 `;
 
 export const MainContentText = styled.span`
-  font-size: .875rem;
+  font-size: 0.875rem;
   font-weight: 400;
 
   color: var(--text);
@@ -83,7 +83,7 @@ export const FooterMenu = styled.ul`
 export const FooterMenuTitle = styled.span`
   font-size: 1rem;
   font-weight: 600;
-  
+
   color: var(--white);
 
   line-height: 2.25rem;
@@ -97,7 +97,7 @@ export const FooterMenuLink = styled.li`
 
     line-height: 2.25rem;
     transition: color 300ms;
-    
+
     &:hover {
       color: white;
     }

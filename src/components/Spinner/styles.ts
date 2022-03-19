@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export interface ISpinnerProps {
   size?: string;
@@ -13,12 +13,13 @@ export const Container = styled.div<ISpinnerProps>`
   border-bottom: 2px solid transparent;
   border-left: 2px solid transparent;
 
-  animation: rotate .5s infinite linear;
+  animation: rotate 0.5s infinite linear;
 
   @keyframes rotate {
     from {
       transform: rotateZ(0deg);
-    } to {
+    }
+    to {
       transform: rotateZ(360deg);
     }
   }
