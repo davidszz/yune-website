@@ -105,18 +105,19 @@ export const BadgesWrapper = styled.div`
   justify-content: flex-end;
   flex-wrap: wrap;
 
+  gap: 4px;
+
   max-width: 50%;
 `;
 
 export const Badge = styled.div`
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
 
   user-select: none;
+  cursor: pointer;
 
   pointer-events: auto;
-
-  margin: 0 2px 2px 0;
 `;
 
 export const Divider = styled.div`
@@ -178,6 +179,8 @@ export const ActivityBody = styled.div`
 export const ActivityIcon = styled.div<{ url: string }>`
   width: 60px;
   height: 60px;
+  min-width: 60px;
+  min-height: 60px;
 
   border-radius: 6px;
   overflow: hidden;

@@ -156,7 +156,7 @@ export function UserCard({
             {badges.map((x, i) => {
               return (
                 <Badge key={`badge-${i}`} data-tip={x.description}>
-                  <Image src={x.src} width="18px" height="18px" alt={x.name} />
+                  <Image src={x.src} width="22px" height="22px" alt={x.name} />
                 </Badge>
               );
             })}

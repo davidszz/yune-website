@@ -241,8 +241,19 @@ export default function Home() {
                                 description: 'Dono(a)',
                                 src: '/assets/icons/staff.png',
                               },
+                              {
+                                name: 'Twice fan',
+                                description: 'Twice fan',
+                                src: '/assets/icons/twice.png',
+                              },
                             ]
-                          : undefined
+                          : [
+                              {
+                                name: 'Bot Developer',
+                                description: 'Desenvolvedor Verificado de Bots Pioneiro',
+                                src: '/assets/icons/early_verified_bot_developer.png',
+                              },
+                            ]
                       }
                       status={discord_status}
                       customStatus={
@@ -271,9 +282,11 @@ export default function Home() {
                           timestamps: spotify.timestamps,
                         }
                       }
-                      avatar={`https://cdn.discordapp.com/avatars/${discord_user.id}/${discord_user.avatar}.${
-                        discord_user.avatar?.startsWith('a_') ? 'gif' : 'png'
-                      }`}
+                      avatar={Util.getUserAvatar({
+                        id: discord_user.id,
+                        avatar: discord_user.avatar,
+                        discriminator: discord_user.discriminator,
+                      })}
                     />
                   );
                 })
